@@ -52,10 +52,18 @@
 }
 
 .profile__title::after {
-  content: url("../images/profile/edit-button.svg");
+  content: "";
+  margin-left: 18px;
   width: 24px;
   height: 24px;
-  margin-left: 18px;
+  display: inline-block;
+  box-sizing: border-box;
+  background-image: url("../images/profile/edit-button.svg");
+  background-repeat: no-repeat;
+  background-color: #000;
+  background-position: center;
+  background-size: 10px;
+  border: 1px solid #ffffff;
 }
 
 .profile__subtitle {
@@ -69,9 +77,11 @@
 
 .add-button {
   padding: 0;
-  box-sizing: border-box;
-  width: 150px;
+  flex-grow: 1;
+  max-width: 150px;
+  min-width: 50px;
   height: 50px;
+  box-sizing: border-box;
   background-image: url("../images/add-button/plus.svg");
   background-repeat: no-repeat;
   background-color: #000;
@@ -81,11 +91,206 @@
   border-radius: 2px;
 }
 
-.add-button__image {
-  width: 22px;
-  height: 22px;
-}
+/* .add-button {
+  margin: 36px 0 0;
+  width: 100%;
+  background-size: 16px;
+} */
 
 .add-button:hover {
   opacity: 0.6;
+}
+
+.elements {
+  padding: 50px 0 0;
+}
+
+.elements__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
+  row-gap: 20px;
+  column-gap: 17px;
+}
+
+.element {
+  margin: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.element__photo {
+  width: 100%;
+  object-fit: cover;
+}
+
+.element__title-block {
+  position: relative;
+  padding: 25px 20px 31px 21px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.element__title {
+  max-width: 80%;
+  margin: 0;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  color: #000000;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.element__like {
+  width: 22px;
+  height: 19px;
+}
+
+.element__checkbox {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.element__checkbox:before {
+  display: inline-block;
+  content: "";
+  display: block;
+  width: 22px;
+  height: 19px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.element__checkbox:before {
+  background-image: url("../images/element/element__heart/element__heart.svg");
+}
+
+.element__checkbox:checked:before {
+  background-image: url("../images/element/element__heart/element__heart_active.svg");
+}
+
+.element__checkbox:not(:checked):hover:before {
+  opacity: 0.5;
+}
+
+.footer {
+  padding: 66px 0 60px;
+}
+
+.footer__copyright {
+  margin: 0;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #545454;
+}
+
+/* .profile__popup {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+} */
+
+@media (max-width: 1279px) {
+  .section {
+    margin: 0 100px;
+  }
+}
+
+@media (max-width: 1080px) {
+  .section {
+    margin: 0 50px;
+  }
+
+  .profile {
+    flex-wrap: wrap;
+    row-gap: 36px;
+  }
+
+  .add-button {
+    /* width: 100%; */
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    margin: 0 19px;
+  }
+
+  .header {
+    min-height: 56px;
+    padding: 28px 0 0;
+    border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+  }
+
+  .header__logo {
+    width: 103.74px;
+    height: 24.4px;
+  }
+
+  .profile {
+    padding: 42px 0 0;
+    flex-direction: column;
+    row-gap: 0;
+  }
+  .profile__avatar {
+  }
+
+  .profile__info {
+    margin-top: 26px;
+    text-align: center;
+  }
+
+  .profile__title {
+    font-size: 27px;
+    line-height: 33px;
+  }
+
+  .profile__title::after {
+    vertical-align: middle;
+    margin-left: 10px;
+    width: 18px;
+    height: 18px;
+    background-size: 7.5px;
+  }
+
+  .profile__subtitle {
+    margin: 14px 0 0;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .add-button {
+    margin: 36px 0 0;
+    width: 100%;
+    max-width: 100%;
+    background-size: 16px;
+  }
+
+  .elements {
+    padding: 36px 0 0;
+  }
+
+  .footer {
+    padding: 48px 0 36px;
+  }
+
+  .footer__copyright {
+    font-size: 14px;
+    line-height: 17px;
+  }
 }
