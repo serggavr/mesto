@@ -1,0 +1,15 @@
+.popup__text-input {
+  padding-bottom: 10px;
+  border: none;
+  border-bottom: 1px solid #000000;
+  font-family: "Inter", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+}
+
+.popup__text-input:not(:first-of-type) {
+  margin-top: 28px;
+}

@@ -1,0 +1,28 @@
+.element__checkbox {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.element__checkbox:before {
+  display: inline-block;
+  content: "";
+  display: block;
+  width: 22px;
+  height: 19px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  transition: opacity 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.element__checkbox:before {
+  background-image: url("../../../images/element/element__heart/element__heart.svg");
+}
+
+.element__checkbox:checked:before {
+  background-image: url("../../../images/element/element__heart/element__heart_active.svg");
+}
+
+.element__checkbox:not(:checked):hover:before {
+  opacity: 0.5;
+}
