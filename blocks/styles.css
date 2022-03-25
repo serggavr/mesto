@@ -11,8 +11,12 @@
   margin: 0 200px;
 }
 
+.section__header {
+}
+
 .header {
   min-height: 74px;
+  margin: 0 200px;
   padding: 45px 0 0;
   border-bottom: 1px solid rgba(84, 84, 84, 0.7);
 }
@@ -26,7 +30,7 @@
   padding: 40px 0 0;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   column-gap: 30px;
 }
@@ -38,23 +42,39 @@
 }
 
 .profile__info {
+  max-width: 65%;
   color: #ffffff;
   flex-grow: 1;
 }
 
+.profile__title-block {
+  /* max-width: 80%; */
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
 .profile__title {
+  /* max-width: 80%; */
   margin: 0;
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;
   font-size: 42px;
   line-height: 114%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.profile__title::after {
+/* .profile__title:after {
   content: "";
-  margin-left: 18px;
-  width: 24px;
+  
+} */
+
+.profile__change-button {
+  margin-left: 19px;
+  min-width: 24px;
   height: 24px;
   display: inline-block;
   box-sizing: border-box;
@@ -64,15 +84,24 @@
   background-position: center;
   background-size: 10px;
   border: 1px solid #ffffff;
+  transition: opacity 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.profile__change-button:hover {
+  opacity: 0.6;
 }
 
 .profile__subtitle {
-  margin: 16px 0 0;
+  margin: 11px 0 0;
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .add-button {
@@ -89,16 +118,12 @@
   background-size: 22px;
   border: 2px solid #ffffff;
   border-radius: 2px;
+  transition: opacity 0.5s ease-in-out;
+  cursor: pointer;
 }
 
-/* .add-button {
-  margin: 36px 0 0;
-  width: 100%;
-  background-size: 16px;
-} */
-
 .add-button:hover {
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 .elements {
@@ -130,7 +155,7 @@
 
 .element__title-block {
   position: relative;
-  padding: 25px 20px 31px 21px;
+  padding: 21px 20px 25px 21px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -169,6 +194,8 @@
   height: 19px;
   background-repeat: no-repeat;
   background-position: center center;
+  transition: opacity 0.5s ease-in-out;
+  cursor: pointer;
 }
 
 .element__checkbox:before {
@@ -184,7 +211,7 @@
 }
 
 .footer {
-  padding: 66px 0 60px;
+  padding: 68px 0 60px;
 }
 
 .footer__copyright {
@@ -197,17 +224,115 @@
   color: #545454;
 }
 
-/* .profile__popup {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
+.popup {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   z-index: 1;
+  display: none;
+  justify-content: center;
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
-} */
+}
+
+.popup_opened {
+  display: flex;
+}
+
+.popup__container {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  margin: 0 19px;
+  background-color: #fff;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+
+.popup__close-button {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  right: -40px;
+  top: -40px;
+  background-image: url("../images/popup/close-button.svg");
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0);
+  background-position: center;
+  background-size: 32px;
+  /* border: 2px solid #ffffff; */
+  border: none;
+  transition: opacity 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.popup__close-button:hover {
+  opacity: 0.6;
+}
+
+.popup__form {
+  padding: 34px 36px 37px;
+  display: flex;
+  flex-direction: column;
+}
+
+.popup__title {
+  margin: 0 0 47px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  color: #000000;
+}
+
+.popup__text-input {
+  padding-bottom: 10px;
+  border: none;
+  border-bottom: 1px solid #000000;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+}
+
+.popup__text-input:not(:first-of-type) {
+  margin-top: 28px;
+}
+
+.popup__submit {
+  margin: 48px 0 0;
+  width: 100%;
+  height: 50px;
+  background-color: #000000;
+  border-radius: 2px;
+  border: none;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #fff;
+  transition: opacity 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.popup__submit:hover {
+  opacity: 0.8;
+}
 
 @media (max-width: 1279px) {
   .section {
     margin: 0 100px;
+  }
+  .header {
+    margin: 0 100px;
+    padding: 28px 0 0;
   }
 }
 
@@ -216,13 +341,14 @@
     margin: 0 50px;
   }
 
+  .header {
+    margin: 0;
+    padding: 28px 50px 0;
+  }
+
   .profile {
     flex-wrap: wrap;
     row-gap: 36px;
-  }
-
-  .add-button {
-    /* width: 100%; */
   }
 }
 
@@ -232,8 +358,8 @@
   }
 
   .header {
-    min-height: 56px;
-    padding: 28px 0 0;
+    min-height: 55px;
+    padding: 28px 25px 0;
     border-bottom: 1px solid rgba(84, 84, 84, 0.7);
   }
 
@@ -251,31 +377,38 @@
   }
 
   .profile__info {
+    max-width: 100%;
     margin-top: 26px;
     text-align: center;
   }
 
+  .profile__title-block {
+    justify-content: center;
+    align-items: center;
+  }
+
   .profile__title {
+    padding-left: 24px;
     font-size: 27px;
     line-height: 33px;
   }
 
-  .profile__title::after {
-    vertical-align: middle;
+  .profile__change-button {
+    /* vertical-align: middle; */
     margin-left: 10px;
-    width: 18px;
+    min-width: 18px;
     height: 18px;
     background-size: 7.5px;
   }
 
   .profile__subtitle {
-    margin: 14px 0 0;
+    margin: 7px 3px 0 0;
     font-size: 14px;
     line-height: 17px;
   }
 
   .add-button {
-    margin: 36px 0 0;
+    margin: 33px 0 0;
     width: 100%;
     max-width: 100%;
     background-size: 16px;
@@ -290,6 +423,31 @@
   }
 
   .footer__copyright {
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .popup__form {
+    padding: 25px 22px;
+  }
+
+  .popup__close-button {
+    width: 20px;
+    height: 20px;
+    right: 0;
+    top: -36px;
+    background-size: 20px;
+  }
+
+  .popup__title {
+    margin: 0 0 75px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .popup__submit {
+    margin: 45px 0 0;
+    height: 46px;
     font-size: 14px;
     line-height: 17px;
   }
