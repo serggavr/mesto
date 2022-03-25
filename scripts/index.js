@@ -1,15 +1,15 @@
 // import popup from "../blocks/popup";
 
+const profileTitle = document.querySelector('.profile__title');
+const profileSubtitle = document.querySelector('.profile__subtitle');
+const popup = document.querySelector('.popup');
 const popupOpenBtn = document.querySelector('.profile__change-button');
 const popupCloseBtn = document.querySelector('.popup__close-button');
-const popup = document.querySelector('.popup');
-let profileTitle = document.querySelector('.profile__title');
-let profileSubtitle = document.querySelector('.profile__subtitle');
-let popupTitle = document.querySelector('.popup__text-input_change_profile-title');
-let popupSubtitle = document.querySelector('.popup__text-input_change_profile-subtitle');
-let popupSubmitBtn = document.querySelector('.popup__submit');
-let popupForm = document.querySelector('.popup__form')
-console.log(popupForm)
+const popupForm = document.querySelector('.popup__form')
+const popupTitle = document.querySelector('.popup__text-input_change_profile-title');
+const popupSubtitle = document.querySelector('.popup__text-input_change_profile-subtitle');
+const popupSubmitBtn = document.querySelector('.popup__submit');
+
 
 function popupToggle(event) {
   if (event.target === event.currentTarget) {
@@ -31,6 +31,7 @@ function disableDefaultAction(event) {
   event.preventDefault();
   popup.classList.toggle('popup_opened')
 }
+
 
 popup.addEventListener('click', popupToggle)
 popupOpenBtn.addEventListener('click', popupToggle)
