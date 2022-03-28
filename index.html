@@ -22,18 +22,22 @@
         <section class="profile section">
           <img
             src="./images/profile/image/avatar.jpg"
-            alt="Жак-Ив Кусто"
+            alt="Аватар пользователя"
             class="profile__avatar"
           />
           <div class="profile__info">
             <div class="profile__title-block">
               <h1 class="profile__title">Жак-Ив Кусто</h1>
-              <button class="profile__change-button"></button>
+              <button class="profile__change-button" type="button"></button>
             </div>
             <p class="profile__subtitle">Исследователь океана</p>
           </div>
 
-          <button class="add-button"></button>
+          <button
+            class="profile__add-button"
+            type="button"
+            type="button"
+          ></button>
         </section>
         <section class="elements section">
           <ul class="elements__list">
@@ -45,9 +49,10 @@
               />
               <div class="element__title-block">
                 <h2 class="element__title">Карачаевск</h2>
-                <label class="element__like">
+                <!-- <label class="element__like">
                   <input type="checkbox" class="element__checkbox" />
-                </label>
+                </label> -->
+                <button class="element__like" type="button"></button>
               </div>
             </li>
             <li class="element">
@@ -58,9 +63,10 @@
               />
               <div class="element__title-block">
                 <h2 class="element__title">Гора Эльбрус</h2>
-                <label class="element__like">
+                <!-- <label class="element__like">
                   <input type="checkbox" class="element__checkbox" />
-                </label>
+                </label> -->
+                <button class="element__like" type="button"></button>
               </div>
             </li>
             <li class="element">
@@ -71,9 +77,10 @@
               />
               <div class="element__title-block">
                 <h2 class="element__title">Домбай</h2>
-                <label class="element__like">
+                <!-- <label class="element__like">
                   <input type="checkbox" class="element__checkbox" />
-                </label>
+                </label> -->
+                <button class="element__like" type="button"></button>
               </div>
             </li>
             <li class="element">
@@ -84,9 +91,10 @@
               />
               <div class="element__title-block">
                 <h2 class="element__title">Гора Эльбрус</h2>
-                <label class="element__like">
+                <!-- <label class="element__like">
                   <input type="checkbox" class="element__checkbox" />
-                </label>
+                </label> -->
+                <button class="element__like" type="button"></button>
               </div>
             </li>
             <li class="element">
@@ -97,9 +105,10 @@
               />
               <div class="element__title-block">
                 <h2 class="element__title">Домбай</h2>
-                <label class="element__like">
+                <!-- <label class="element__like">
                   <input type="checkbox" class="element__checkbox" />
-                </label>
+                </label> -->
+                <button class="element__like" type="button"></button>
               </div>
             </li>
             <li class="element">
@@ -110,30 +119,37 @@
               />
               <div class="element__title-block">
                 <h2 class="element__title">Карачаево-Черкесия</h2>
-                <label class="element__like">
+                <!-- <label class="element__like">
                   <input type="checkbox" class="element__checkbox" />
-                </label>
+                </label> -->
+                <button class="element__like" type="button"></button>
               </div>
             </li>
           </ul>
         </section>
       </main>
       <footer class="footer section">
-        <h3 class="footer__copyright">© 2020 Mesto Russia</h3>
+        <p class="footer__copyright">© 2020 Mesto Russia</p>
       </footer>
     </div>
     <div class="popup">
       <div class="popup__container">
-        <button class="popup__close-button"></button>
-        <form action="#" class="popup__form">
+        <button class="popup__close-button" type="button"></button>
+        <form action="#" class="popup__form" name="popup__form">
           <h2 class="popup__title">Редактировать профиль</h2>
           <input
             type="text"
             class="popup__text-input popup__text-input_change_profile-title"
+            name="popup__text-input_change_profile-title"
+            required
+            placeholder="Жак-Ив Кусто"
           />
           <input
             type="text"
             class="popup__text-input popup__text-input_change_profile-subtitle"
+            name="popup__text-input_change_profile-subtitle"
+            required
+            placeholder="Исследователь океана"
           />
           <input type="submit" class="popup__submit" value="Сохранить" />
         </form>
