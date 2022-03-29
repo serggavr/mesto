@@ -28,11 +28,19 @@
           <div class="profile__info">
             <div class="profile__title-block">
               <h1 class="profile__title">Жак-Ив Кусто</h1>
-              <button class="profile__change-button" type="button"></button>
+              <button
+                class="profile__change-button"
+                type="button"
+                aria-label="Редактировать профиль"
+              ></button>
             </div>
             <p class="profile__subtitle">Исследователь океана</p>
           </div>
-          <button class="profile__add-button" type="button"></button>
+          <button
+            class="profile__add-button"
+            type="button"
+            aria-label="Добавить карточку"
+          ></button>
         </section>
         <section class="elements section">
           <ul class="elements__list">
@@ -44,10 +52,11 @@
               />
               <div class="element__title-block">
                 <h2 class="element__title">Карачаевск</h2>
-                <!-- <label class="element__like">
-                  <input type="checkbox" class="element__checkbox" />
-                </label> -->
-                <button class="element__like" type="button"></button>
+                <button
+                  class="element__like"
+                  type="button"
+                  aria-label="Нравится"
+                ></button>
               </div>
             </li>
             <li class="element">
@@ -58,10 +67,11 @@
               />
               <div class="element__title-block">
                 <h2 class="element__title">Гора Эльбрус</h2>
-                <!-- <label class="element__like">
-                  <input type="checkbox" class="element__checkbox" />
-                </label> -->
-                <button class="element__like" type="button"></button>
+                <button
+                  class="element__like"
+                  type="button"
+                  aria-label="Нравится"
+                ></button>
               </div>
             </li>
             <li class="element">
@@ -72,10 +82,11 @@
               />
               <div class="element__title-block">
                 <h2 class="element__title">Домбай</h2>
-                <!-- <label class="element__like">
-                  <input type="checkbox" class="element__checkbox" />
-                </label> -->
-                <button class="element__like" type="button"></button>
+                <button
+                  class="element__like"
+                  type="button"
+                  aria-label="Нравится"
+                ></button>
               </div>
             </li>
             <li class="element">
@@ -86,10 +97,11 @@
               />
               <div class="element__title-block">
                 <h2 class="element__title">Гора Эльбрус</h2>
-                <!-- <label class="element__like">
-                  <input type="checkbox" class="element__checkbox" />
-                </label> -->
-                <button class="element__like" type="button"></button>
+                <button
+                  class="element__like"
+                  type="button"
+                  aria-label="Нравится"
+                ></button>
               </div>
             </li>
             <li class="element">
@@ -100,24 +112,28 @@
               />
               <div class="element__title-block">
                 <h2 class="element__title">Домбай</h2>
-                <!-- <label class="element__like">
-                  <input type="checkbox" class="element__checkbox" />
-                </label> -->
-                <button class="element__like" type="button"></button>
+                <button
+                  class="element__like"
+                  type="button"
+                  aria-label="Нравится"
+                ></button>
               </div>
             </li>
             <li class="element">
-              <img
-                src="./images/element/element__photo/photo_6.jpg"
-                alt="Карачаево-Черкесия"
-                class="element__photo"
-              />
+              <div class="element__photo-wrapper">
+                <img
+                  src="./images/element/element__photo/photo_6.jpg"
+                  alt="Карачаево-Черкесия"
+                  class="element__photo"
+                />
+              </div>
               <div class="element__title-block">
                 <h2 class="element__title">Карачаево-Черкесия</h2>
-                <!-- <label class="element__like">
-                  <input type="checkbox" class="element__checkbox" />
-                </label> -->
-                <button class="element__like" type="button"></button>
+                <button
+                  class="element__like"
+                  type="button"
+                  aria-label="Нравится"
+                ></button>
               </div>
             </li>
           </ul>
@@ -129,7 +145,11 @@
     </div>
     <div class="popup">
       <div class="popup__container">
-        <button class="popup__close-button" type="button"></button>
+        <button
+          class="popup__close-button"
+          type="button"
+          aria-label="Закрыть"
+        ></button>
         <form action="#" class="popup__form" name="popup__form">
           <h2 class="popup__title">Редактировать профиль</h2>
           <input
