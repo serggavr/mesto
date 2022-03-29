@@ -10,20 +10,24 @@ const popupTitle = document.querySelector('.popup__text-input_change_profile-tit
 const popupSubtitle = document.querySelector('.popup__text-input_change_profile-subtitle');
 
 
-function popupToggle() {
-    popup.classList.toggle('popup_opened')
-    popupTitle.value = profileTitle.innerText
-    popupSubtitle.value = profileSubtitle.innerText
+function togglePopup() {
+  popup.classList.toggle('popup_opened')
+}
+
+function openPopup() {
+  togglePopup()
+  popupTitle.value = profileTitle.textContent
+  popupSubtitle.value = profileSubtitle.textContent
 }
 
 function changeProfileContent(event) {
   event.preventDefault();
-  profileTitle.innerText = popupTitle.value
-  profileSubtitle.innerText = popupSubtitle.value
-  popupToggle()
+  profileTitle.textContent = popupTitle.value
+  profileSubtitle.textContent = popupSubtitle.value
+  togglePopup()
 }
 
 
-popupOpenBtn.addEventListener('click', popupToggle)
-popupCloseBtn.addEventListener('click', popupToggle)
-popupForm.addEventListener('submit', changeProfileContent)
+popupOpenBtn.addEventListener('click', openPopup);
+popupCloseBtn.addEventListener('click', togglePopup);
+popupForm.addEventListener('submit', changeProfileContent);
