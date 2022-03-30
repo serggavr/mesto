@@ -3,7 +3,7 @@ const profileSubtitle = document.querySelector('.profile__subtitle');
 const popup = document.querySelector('.popup');
 const popupOpenBtn = document.querySelector('.profile__change-button');
 const popupCloseBtn = document.querySelector('.popup__close-button');
-const popupForm = document.querySelector('.popup__edit-profile')
+const popupForm = document.querySelector('.popup__form')
 const popupTitle = document.querySelector('.popup__text-input_change_profile-title');
 const popupSubtitle = document.querySelector('.popup__text-input_change_profile-subtitle');
 
