@@ -44,7 +44,7 @@
         </section>
         <section class="elements section">
           <ul class="elements__list">
-            <li class="element">
+            <!-- <li class="element">
               <img
                 src="./images/element/element__photo/photo_1.jpg"
                 alt="Карачаевск"
@@ -135,7 +135,7 @@
                   aria-label="Нравится"
                 ></button>
               </div>
-            </li>
+            </li> -->
           </ul>
         </section>
       </main>
@@ -170,6 +170,19 @@
         </form>
       </div>
     </div>
+    <template id="element">
+      <li class="element">
+        <img src="" alt="" class="element__photo" />
+        <div class="element__title-block">
+          <h2 class="element__title"></h2>
+          <button
+            class="element__like"
+            type="button"
+            aria-label="Нравится"
+          ></button>
+        </div>
+      </li>
+    </template>
     <script src="./scripts/index.js"></script>
   </body>
 </html>
