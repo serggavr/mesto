@@ -36,18 +36,16 @@ const initialCards = [
 ];
 
   
-function createCard(name, link) {
+function createCard(elem) {
     const elementTemplate = document.querySelector('#element').content;
     const element = elementTemplate.querySelector('.element').cloneNode(true);
 
-    element.querySelector('.element__photo').src = link;
-    element.querySelector('.element__photo').alt = name;
-    element.querySelector('.element__title').textContent = name;
+    element.querySelector('.element__photo').src = elem.link;
+    element.querySelector('.element__photo').alt = elem.name;
+    element.querySelector('.element__title').textContent = elem.name;
 
     // Для удаления, назначить на кнопку удаления, пока повесил на element if title
-    element.querySelector('.element__title').addEventListener('click', (e) => {
-      e.target.closest('.element').remove()
-    })
+    element.querySelector('.element__delete-btn').addEventListener('click', () => element.remove())
     //
 
     // Для лайков
@@ -67,7 +65,7 @@ function createCard(name, link) {
 
 function addElementToList(arr) {
   arr.forEach((elem) => {
-    elementList.appendChild(createCard(elem.name, elem.link))
+    elementList.appendChild(createCard(elem))
   })
 }
 
