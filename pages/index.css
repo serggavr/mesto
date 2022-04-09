@@ -48,8 +48,14 @@
 @import url("../blocks/popup/popup.css");
 @import url("../blocks/popup/_opened/popup_opened.css");
 @import url("../blocks/popup/__container/popup__container.css");
+@import url("../blocks/popup/__container/_contain_popup-img/popup__container_contain_popup-img.css");
 @import url("../blocks/popup/__close-button/popup__close-button.css");
 @import url("../blocks/popup/__form/popup__form.css");
 @import url("../blocks/popup/__title/popup__title.css");
 @import url("../blocks/popup/__text-input/popup__text-input.css");
 @import url("../blocks/popup/__submit/popup__submit.css");
+
+/* popup-img */
+@import url("../blocks/popup-img/popup-img.css");
+@import url("../blocks/popup-img/__image/popup-img__image.css");
+@import url("../blocks/popup-img/__caption/popup-img__caption.css");

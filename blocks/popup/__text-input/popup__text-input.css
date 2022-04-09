@@ -13,3 +13,7 @@
 .popup__text-input:not(:first-of-type) {
   margin-top: 28px;
 }
+
+.popup__text-input::placeholder {
+  color: #c4c4c4;
+}
