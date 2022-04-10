@@ -85,18 +85,19 @@ function addElementToList(arr) {
 // open/close popups
 function togglePopup(event) {
   // edit profile popup
-  if (event.target === popupChangeProfileOpenBtn) {
+  if (event.target === popupChangeProfileOpenBtn || event.target.name === "edit-profile") {
     popupChangeProfile.classList.toggle('popup_opened')
   }
   // add element popup
-  if (event.target === popupAddElementCardOpenBtn) {
+  if (event.target === popupAddElementCardOpenBtn || event.target.name === "add-element-card") {
     popupAddElementCard.classList.toggle('popup_opened')
   }
   // element overview popup
   if (event.target.classList.value === 'element__photo') {
     popupOverview.classList.toggle('popup_opened')
-  } else {
-    // close popup
+  }
+  // close popup btn
+  if (event.target.classList.value === 'popup__close-button') {
     event.target.closest('.popup').classList.toggle('popup_opened')
   }
 }
@@ -117,8 +118,12 @@ function changeProfileContent(title, subtitle) {
 // submit forms
 function submitPopupForm(event) {
   event.preventDefault();
-  if (event.target.name === "edit-profile") changeProfileContent(popupChangeProfileNewTitle.value, popupChangeProfileNewSubtitle.value);
-  if (event.target.name === "add-element-card") addNewElementCard(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value);
+  if (event.target.name === "edit-profile") {
+    changeProfileContent(popupChangeProfileNewTitle.value, popupChangeProfileNewSubtitle.value);
+  };
+  if (event.target.name === "add-element-card") {
+    addNewElementCard(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value);
+  };
   togglePopup(event);
 }
 
