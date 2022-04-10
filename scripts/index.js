@@ -9,19 +9,19 @@ const popupChangeProfileNewTitle = document.querySelector('.popup__text-input_ch
 const popupChangeProfileNewSubtitle = document.querySelector('.popup__text-input_change_profile-subtitle');
 
 // popup_add_element-card
-const popupAddElementCard = document.querySelector('.popup_add_element-card')
-const popupAddElementCardOpenBtn = document.querySelector('.profile__add-button')
-const popupAddElementCardNewCardName = document.querySelector('.popup__text-input_add_element-card-name')
-const popupAddElementCardNewCardLink = document.querySelector('.popup__text-input_add_element-card-image-link')
+const popupAddElementCard = document.querySelector('.popup_add_element-card');
+const popupAddElementCardOpenBtn = document.querySelector('.profile__add-button');
+const popupAddElementCardNewCardName = document.querySelector('.popup__text-input_add_element-card-name');
+const popupAddElementCardNewCardLink = document.querySelector('.popup__text-input_add_element-card-image-link');
 
 // popup_element-overview
-const popupOverview = document.querySelector('.popup_element-overview')
-const popupOverviewImage = document.querySelector('.overview__image')
-const popupOverviewCaption = document.querySelector('.overview__caption')
+const popupOverview = document.querySelector('.popup_element-overview');
+const popupOverviewImage = document.querySelector('.overview__image');
+const popupOverviewCaption = document.querySelector('.overview__caption');
 
 // popup buttons & popup forms
 const popupClosePopupButtons = document.querySelectorAll('.popup__close-button');
-const popupForms = document.querySelectorAll('.popup__form')
+const popupForms = document.querySelectorAll('.popup__form');
 
 
 const initialCards = [{
@@ -60,16 +60,16 @@ function createCard(name, link) {
   element.querySelector('.element__title').textContent = name;
 
   // delete element
-  element.querySelector('.element__delete-btn').addEventListener('click', () => element.remove())
+  element.querySelector('.element__delete-btn').addEventListener('click', () => element.remove());
 
   // like element
-  element.querySelector('.element__like').addEventListener('click', (e) => e.target.classList.toggle('element__like_active'))
+  element.querySelector('.element__like').addEventListener('click', (e) => e.target.classList.toggle('element__like_active'));
 
   // open element popup
   element.querySelector('.element__photo').addEventListener('click', (e) => {
     popupOverviewImage.src = link;
     popupOverviewCaption.textContent = name;
-    togglePopup(e)
+    togglePopup(e);
   })
 
   return element
@@ -77,35 +77,29 @@ function createCard(name, link) {
 
 //add elements to element__list
 function addElementToList(arr) {
-  arr.forEach((elem) => {
-    elementList.appendChild(createCard(elem.name, elem.link))
-  })
+  arr.forEach((elem) => elementList.appendChild(createCard(elem.name, elem.link)));
 }
 
 // open/close popups
 function togglePopup(event) {
   // edit profile popup
-  if (event.target === popupChangeProfileOpenBtn) {
-    popupChangeProfile.classList.toggle('popup_opened')
-  }
+  if (event.target === popupChangeProfileOpenBtn || event.target.name === "edit-profile") popupChangeProfile.classList.toggle('popup_opened');
+
   // add element popup
-  if (event.target === popupAddElementCardOpenBtn) {
-    popupAddElementCard.classList.toggle('popup_opened')
-  }
+  if (event.target === popupAddElementCardOpenBtn || event.target.name === "add-element-card") popupAddElementCard.classList.toggle('popup_opened');
+
   // element overview popup
-  if (event.target.classList.value === 'element__photo') {
-    popupOverview.classList.toggle('popup_opened')
-  } else {
-    // close popup
-    event.target.closest('.popup').classList.toggle('popup_opened')
-  }
+  if (event.target.classList.value === 'element__photo') popupOverview.classList.toggle('popup_opened');
+
+  // close popup btn
+  if (event.target.classList.value === 'popup__close-button') event.target.closest('.popup').classList.toggle('popup_opened');
 }
 
 // add value from profile to the popup__change_profile
 function openChangeProfilePopup(event) {
-  popupChangeProfileNewTitle.value = profileTitle.textContent
-  popupChangeProfileNewSubtitle.value = profileSubtitle.textContent
-  togglePopup(event)
+  popupChangeProfileNewTitle.value = profileTitle.textContent;
+  popupChangeProfileNewSubtitle.value = profileSubtitle.textContent;
+  togglePopup(event);
 }
 
 // add value from popup__change_profile to the profile
@@ -124,7 +118,7 @@ function submitPopupForm(event) {
 
 // add new element from popup_add_element-card
 function addNewElementCard(name, link) {
-  elementList.insertBefore(createCard(name, link), elementList.firstChild)
+  elementList.insertBefore(createCard(name, link), elementList.firstChild);
 }
 
 popupChangeProfileOpenBtn.addEventListener('click', openChangeProfilePopup);
@@ -133,5 +127,5 @@ popupClosePopupButtons.forEach((elem) => elem.addEventListener('click', togglePo
 popupForms.forEach((elem) => elem.addEventListener('submit', submitPopupForm));
 
 window.onload = function () {
-  addElementToList(initialCards)
+  addElementToList(initialCards);
 }
