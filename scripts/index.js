@@ -107,6 +107,9 @@ function changeProfileContent(event) {
 function addNewCard(event) {
   event.preventDefault();
   cardsList.prepend(createCard(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value))
+  popupAddElementCardNewCardName.value = '';
+  popupAddElementCardNewCardLink.value = '';
+  togglePopup(popupAddElementCard)
 }
 
 popupChangeProfileOpenBtn.addEventListener("click", openProfilePopup);
