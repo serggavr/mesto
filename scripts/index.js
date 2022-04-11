@@ -3,7 +3,7 @@ const profileDescription = document.querySelector(".profile__subtitle");
 const cardsList = document.querySelector(".elements__list");
 
 // popup_type_change_profile
-const popupChangeProfile = document.querySelector(".popup_type_change_profile");
+const popupChangeProfile = document.querySelector(".popup_type_change-profile");
 const popupChangeProfileForm = document.querySelector('.popup__form[name=edit-profile]')
 const popupChangeProfileOpenBtn = document.querySelector(".profile__change-button");
 const popupChangeProfileNewName = document.querySelector(".popup__text-input_type_username");
