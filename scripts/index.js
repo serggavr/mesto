@@ -106,17 +106,17 @@ function changeProfileContent(event) {
 // add new card to element__list
 function addNewCard(event) {
   event.preventDefault();
-  cardsList.prepend(createCard(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value))
+  cardsList.prepend(createCard(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value));
   popupAddElementCardNewCardName.value = '';
   popupAddElementCardNewCardLink.value = '';
-  togglePopup(popupAddElementCard)
+  togglePopup(popupAddElementCard);
 }
 
 popupChangeProfileOpenBtn.addEventListener("click", openProfilePopup);
 popupAddElementCardOpenBtn.addEventListener("click", () => togglePopup(popupAddElementCard));
 popupClosePopupButtons.forEach((elem) => elem.addEventListener("click", () => togglePopup(elem)));
-popupChangeProfileForm.addEventListener('submit', changeProfileContent)
-popupAddElementCardForm.addEventListener('submit', addNewCard)
+popupChangeProfileForm.addEventListener('submit', changeProfileContent);
+popupAddElementCardForm.addEventListener('submit', addNewCard);
 
 window.onload = function () {
   addCardToCardsList(initialCards);
