@@ -77,15 +77,15 @@ function createCard(name, link) {
 }
 
 //add card to element__list
-function addCardToCardsList(arr) {
-  arr.forEach((elem) =>
+function addCardsToCardsList(initialCards) {
+  initialCards.forEach((elem) =>
     cardsList.appendChild(createCard(elem.name, elem.link))
   );
 }
 
 // open/close popups
-function togglePopup(elem) {
-  elem.closest(".popup").classList.toggle("popup_opened")
+function togglePopup(popup) {
+  popup.classList.toggle("popup_opened")
 }
 
 // add value from profile to the popup__change_profile
@@ -114,10 +114,10 @@ function addNewCard(event) {
 
 popupChangeProfileOpenBtn.addEventListener("click", openProfilePopup);
 popupAddElementCardOpenBtn.addEventListener("click", () => togglePopup(popupAddElementCard));
-popupClosePopupButtons.forEach((elem) => elem.addEventListener("click", () => togglePopup(elem)));
+popupClosePopupButtons.forEach((elem) => elem.addEventListener("click", () => togglePopup(elem.closest(".popup"))));
 popupChangeProfileForm.addEventListener('submit', changeProfileContent);
 popupAddElementCardForm.addEventListener('submit', addNewCard);
 
 window.onload = function () {
-  addCardToCardsList(initialCards);
+  addCardsToCardsList(initialCards);
 };
