@@ -66,13 +66,17 @@
             name="popup__text-input_type_username"
             required
             placeholder="Имя"
+            minlength="2"
+            maxlength="40"
           />
           <input
             type="text"
             class="popup__text-input popup__text-input_type_description"
             name="popup__text-input_type_description"
             required
-            placeholder="Специализация"
+            placeholder="О себе"
+            minlength="2"
+            maxlength="200"
           />
           <input type="submit" class="popup__submit" value="Сохранить" />
         </form>
@@ -94,9 +98,11 @@
             name="popup__text-input_type_card-name"
             required
             placeholder="Название"
+            minlength="2"
+            maxlength="30"
           />
           <input
-            type="text"
+            type="url"
             class="popup__text-input popup__text-input_type_image-link"
             name="popup__text-input_type_image-link"
             required

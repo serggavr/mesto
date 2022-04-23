@@ -4,14 +4,14 @@ const cardsList = document.querySelector(".elements__list");
 
 // popup_type_change_profile
 const popupChangeProfile = document.querySelector(".popup_type_change-profile");
-const popupChangeProfileForm = document.querySelector('.popup__form[name=edit-profile]')
+const popupChangeProfileForm = document.querySelector(".popup__form[name=edit-profile]")
 const popupChangeProfileOpenBtn = document.querySelector(".profile__change-button");
 const popupChangeProfileNewName = document.querySelector(".popup__text-input_type_username");
 const popupChangeProfileNewDescription = document.querySelector(".popup__text-input_type_description");
 
 // popup_type_add-element-card
 const popupAddElementCard = document.querySelector(".popup_type_add-element-card");
-const popupAddElementCardForm = document.querySelector('.popup__form[name=add-element-card]')
+const popupAddElementCardForm = document.querySelector(".popup__form[name=add-element-card]")
 const popupAddElementCardOpenBtn = document.querySelector(".profile__add-button");
 const popupAddElementCardNewCardName = document.querySelector(".popup__text-input_type_card-name");
 const popupAddElementCardNewCardLink = document.querySelector(".popup__text-input_type_image-link");
@@ -114,8 +114,8 @@ function addNewCard(event) {
 popupChangeProfileOpenBtn.addEventListener("click", openProfilePopup);
 popupAddElementCardOpenBtn.addEventListener("click", () => togglePopup(popupAddElementCard));
 popupClosePopupButtons.forEach((elem) => elem.addEventListener("click", () => togglePopup(elem.closest(".popup"))));
-popupChangeProfileForm.addEventListener('submit', changeProfileContent);
-popupAddElementCardForm.addEventListener('submit', addNewCard);
+popupChangeProfileForm.addEventListener("submit", changeProfileContent);
+popupAddElementCardForm.addEventListener("submit", addNewCard);
 
 window.onload = function () {
   addCardsToCardsList(initialCards);
