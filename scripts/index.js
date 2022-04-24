@@ -1,20 +1,21 @@
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__subtitle");
 const cardsList = document.querySelector(".elements__list");
+const popups = document.querySelectorAll(".popup")
 
 // popup_type_change_profile
 const popupChangeProfile = document.querySelector(".popup_type_change-profile");
-const popupChangeProfileForm = document.querySelector('.popup__form[name=edit-profile]')
+const popupChangeProfileForm = document.querySelector(".popup__form[name=edit-profile]")
 const popupChangeProfileOpenBtn = document.querySelector(".profile__change-button");
-const popupChangeProfileNewName = document.querySelector(".popup__text-input_type_username");
-const popupChangeProfileNewDescription = document.querySelector(".popup__text-input_type_description");
+const popupChangeProfileNewName = document.querySelector(".popup__input_type_username");
+const popupChangeProfileNewDescription = document.querySelector(".popup__input_type_description");
 
 // popup_type_add-element-card
 const popupAddElementCard = document.querySelector(".popup_type_add-element-card");
-const popupAddElementCardForm = document.querySelector('.popup__form[name=add-element-card]')
+const popupAddElementCardForm = document.querySelector(".popup__form[name=add-element-card]")
 const popupAddElementCardOpenBtn = document.querySelector(".profile__add-button");
-const popupAddElementCardNewCardName = document.querySelector(".popup__text-input_type_card-name");
-const popupAddElementCardNewCardLink = document.querySelector(".popup__text-input_type_image-link");
+const popupAddElementCardNewCardName = document.querySelector(".popup__input_type_card-name");
+const popupAddElementCardNewCardLink = document.querySelector(".popup__input_type_image-link");
 
 // popup_type_element-overview
 const popupOverview = document.querySelector(".popup_type_element-overview");
@@ -22,7 +23,7 @@ const popupOverviewImage = document.querySelector(".overview__image");
 const popupOverviewCaption = document.querySelector(".overview__caption");
 
 // popup close buttons 
-const popupClosePopupButtons = document.querySelectorAll(".popup__close-button");
+const popupClosePopupsButtons = document.querySelectorAll(".popup__close-button");
 
 const initialCards = [{
     name: "Архыз",
@@ -50,7 +51,13 @@ const initialCards = [{
   },
 ];
 
-// create element card
+
+/** create element card
+ * 
+ * @param {string} name 
+ * @param {string} link 
+ * @returns {HTMLElement}
+ */
 function createCard(name, link) {
   const elementTemplate = document.querySelector("#element").content;
   const element = elementTemplate.querySelector(".element").cloneNode(true);
@@ -76,26 +83,44 @@ function createCard(name, link) {
   return element;
 }
 
-//add card to element__list
+/** Add card to element__list
+ * 
+ * @param {Array} initialCards 
+ */
 function addCardsToCardsList(initialCards) {
   initialCards.forEach((elem) =>
     cardsList.appendChild(createCard(elem.name, elem.link))
   );
 }
 
-// open/close popups
+/** Open/close popups 
+ * 
+ * @param {HTMLElement} popup
+ */
 function togglePopup(popup) {
   popup.classList.toggle("popup_opened")
 }
 
-// add value from profile to the popup__change_profile
-function openProfilePopup() {
+/** Fill with on load form inputs in change profile
+ * 
+ */
+function fillOnLoadProfilePopup() {
   popupChangeProfileNewName.value = profileName.textContent;
   popupChangeProfileNewDescription.value = profileDescription.textContent;
+}
+
+/** Add value from profile to the popup__change_profile
+ * 
+ */
+function openProfilePopup() {
+  fillOnLoadProfilePopup()
   togglePopup(popupChangeProfile);
 }
 
-// add value from popup__change_profile to the profile
+/** Add value from popup__change_profile to the profile
+ * 
+ * @param {SubmitEvent} event 
+ */
 function changeProfileContent(event) {
   event.preventDefault();
   profileName.textContent = popupChangeProfileNewName.value;
@@ -103,20 +128,74 @@ function changeProfileContent(event) {
   togglePopup(popupChangeProfile);
 }
 
-// add new card to element__list
+/** Add new card to element__list
+ * 
+ * @param {SubmitEvent} event 
+ */
 function addNewCard(event) {
   event.preventDefault();
   cardsList.prepend(createCard(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value));
-  popupAddElementCardForm.reset();
   togglePopup(popupAddElementCard);
 }
 
-popupChangeProfileOpenBtn.addEventListener("click", openProfilePopup);
-popupAddElementCardOpenBtn.addEventListener("click", () => togglePopup(popupAddElementCard));
-popupClosePopupButtons.forEach((elem) => elem.addEventListener("click", () => togglePopup(elem.closest(".popup"))));
-popupChangeProfileForm.addEventListener('submit', changeProfileContent);
-popupAddElementCardForm.addEventListener('submit', addNewCard);
+/** Cleans inputs in form
+ * 
+ * @param {HTMLFormElement} form 
+ */
+function clearFormInputs(form) {
+  form.reset()
+}
 
-window.onload = function () {
-  addCardsToCardsList(initialCards);
-};
+/** Close popup on key down 'Escape' and remove self listener
+ * 
+ */
+function closePopupOnKeyDown() {
+  if (event.key === "Escape") {
+    popups.forEach((popup) => {
+      popup.classList.remove('popup_opened')
+    })
+    document.removeEventListener('keyup', closePopupOnKeyDown)
+  }
+}
+
+/** Close popup on 'click' on overlay and remove self listener
+ * 
+ */
+function closePopupOnClickOnOverlay() {
+  if (event.target === event.currentTarget) {
+    togglePopup(event.target)
+    event.target.removeEventListener('click', closePopupOnClickOnOverlay)
+  }
+}
+
+
+popupChangeProfileOpenBtn.addEventListener("click", () => {
+  clearFormInputs(popupChangeProfileForm)
+  document.addEventListener('keyup', closePopupOnKeyDown)
+  popupChangeProfile.addEventListener('click', closePopupOnClickOnOverlay)
+  openProfilePopup()
+});
+
+popupAddElementCardOpenBtn.addEventListener("click", () => {
+  clearFormInputs(popupAddElementCardForm)
+  document.addEventListener('keyup', closePopupOnKeyDown)
+  popupAddElementCard.addEventListener('click', closePopupOnClickOnOverlay)
+  togglePopup(popupAddElementCard)
+});
+
+popupClosePopupsButtons.forEach((elem) => elem.addEventListener("click", () => {
+  togglePopup(elem.closest(".popup"))
+}));
+
+popupChangeProfileForm.addEventListener("submit", (event) => {
+  changeProfileContent(event)
+});
+
+popupAddElementCardForm.addEventListener("submit", (event) => {
+  addNewCard(event)
+  popupAddElementCardForm.reset()
+});
+
+window.onload = () => {
+  addCardsToCardsList(initialCards)
+}
