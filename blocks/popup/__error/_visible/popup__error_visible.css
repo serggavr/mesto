@@ -1,11 +1,4 @@
 .popup__error_visible {
   display: inline;
   height: 0px;
-  /* padding-bottom: -5px; */
-  /* margin-bottom: -5px; */
-  /* margin-bottom: 13px; */
 }
-
-/* .popup__error_visible:last-of-type {
-  margin-bottom: 0;
-} */
