@@ -77,6 +77,8 @@ function createCard(name, link) {
     popupOverviewImage.src = link;
     popupOverviewImage.alt = name;
     popupOverviewCaption.textContent = name;
+    document.addEventListener('keyup', closePopupOnKeyDown)
+    popupOverview.addEventListener('click', closePopupOnClickOnOverlay)
     togglePopup(popupOverview);
   });
 
