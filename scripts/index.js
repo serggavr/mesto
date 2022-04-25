@@ -1,6 +1,6 @@
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__subtitle");
-const cardsList = document.querySelector(".elements__list");
+const cardsContainer = document.querySelector(".elements__list");
 const popups = document.querySelectorAll(".popup")
 
 // popup_type_change_profile
@@ -89,9 +89,9 @@ function createCard(name, link) {
  * 
  * @param {Array} initialCards 
  */
-function addCardsToCardsList(initialCards) {
+function addCardsToCardsContainer(initialCards) {
   initialCards.forEach((elem) =>
-    cardsList.appendChild(createCard(elem.name, elem.link))
+    cardsContainer.appendChild(createCard(elem.name, elem.link))
   );
 }
 
@@ -136,7 +136,7 @@ function changeProfileContent(event) {
  */
 function addNewCard(event) {
   event.preventDefault();
-  cardsList.prepend(createCard(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value));
+  cardsContainer.prepend(createCard(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value));
   togglePopup(popupAddElementCard);
 }
 
@@ -199,5 +199,5 @@ popupAddElementCardForm.addEventListener("submit", (event) => {
 });
 
 window.onload = () => {
-  addCardsToCardsList(initialCards)
+  addCardsToCardsContainer(initialCards)
 }
