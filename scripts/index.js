@@ -84,7 +84,7 @@ function createCard(name, link) {
     popupOverviewCaption.textContent = name;
     document.addEventListener('keyup', closePopupOnKeyDown)
     popupOverview.addEventListener('click', closePopupOnClickOnOverlay)
-    togglePopup(popupOverview);
+    openPopup(popupOverview);
   });
 
   return element;
@@ -100,13 +100,22 @@ function addCardsToCardsContainer(initialCards) {
   );
 }
 
-/** Open/close popups 
+/** Open popup 
  * 
  * @param {HTMLElement} popup
  */
-function togglePopup(popup) {
-  popup.classList.toggle("popup_opened")
+function openPopup(popup) {
+  popup.classList.add("popup_opened")
 }
+
+/** Close popups 
+ * 
+ * @param {HTMLElement} popup
+ */
+function closePopup(popup) {
+  popup.classList.remove("popup_opened")
+}
+
 
 /** Fill with on load form inputs in change profile
  * 
@@ -121,7 +130,7 @@ function fillOnLoadProfilePopup() {
  */
 function openProfilePopup() {
   fillOnLoadProfilePopup()
-  togglePopup(popupChangeProfile);
+  openPopup(popupChangeProfile);
 }
 
 /** Add value from popup__change_profile to the profile
@@ -132,7 +141,7 @@ function changeProfileContent(event) {
   event.preventDefault();
   profileName.textContent = popupChangeProfileNewName.value;
   profileDescription.textContent = popupChangeProfileNewDescription.value;
-  togglePopup(popupChangeProfile);
+  closePopup(popupChangeProfile);
 }
 
 /** Add new card to element__list
@@ -142,7 +151,7 @@ function changeProfileContent(event) {
 function addNewCard(event) {
   event.preventDefault();
   cardsContainer.prepend(createCard(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value));
-  togglePopup(popupAddElementCard);
+  closePopup(popupAddElementCard);
 }
 
 /** Cleans inputs in form
@@ -170,7 +179,7 @@ function closePopupOnKeyDown() {
  */
 function closePopupOnClickOnOverlay() {
   if (event.target === event.currentTarget) {
-    togglePopup(event.target)
+    closePopup(event.target)
     event.target.removeEventListener('click', closePopupOnClickOnOverlay)
   }
 }
@@ -187,11 +196,11 @@ popupAddElementCardOpenBtn.addEventListener("click", () => {
   clearFormInputs(popupAddElementCardForm)
   document.addEventListener('keyup', closePopupOnKeyDown)
   popupAddElementCard.addEventListener('click', closePopupOnClickOnOverlay)
-  togglePopup(popupAddElementCard)
+  openPopup(popupAddElementCard)
 });
 
 popupClosePopupsButtons.forEach((elem) => elem.addEventListener("click", () => {
-  togglePopup(elem.closest(".popup"))
+  closePopup(elem.closest(".popup"))
 }));
 
 popupChangeProfileForm.addEventListener("submit", (event) => {
