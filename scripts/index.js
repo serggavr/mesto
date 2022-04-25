@@ -22,8 +22,11 @@ const popupOverview = document.querySelector(".popup_type_element-overview");
 const popupOverviewImage = document.querySelector(".overview__image");
 const popupOverviewCaption = document.querySelector(".overview__caption");
 
-// popup close buttons 
+// popup close buttons
 const popupClosePopupsButtons = document.querySelectorAll(".popup__close-button");
+
+// card template
+const elementTemplate = document.querySelector("#element").content;
 
 const initialCards = [{
     name: "Архыз",
@@ -59,21 +62,23 @@ const initialCards = [{
  * @returns {HTMLElement}
  */
 function createCard(name, link) {
-  const elementTemplate = document.querySelector("#element").content;
   const element = elementTemplate.querySelector(".element").cloneNode(true);
+  const elementPhoto = element.querySelector(".element__photo")
+  const elementTitle = element.querySelector(".element__title")
+  const elementDeleteBtn = element.querySelector(".element__delete-btn")
+  const elementLikeBtn = element.querySelector(".element__like")
 
-  element.querySelector(".element__photo").src = link;
-  element.querySelector(".element__photo").alt = name;
-  element.querySelector(".element__title").textContent = name;
+  elementPhoto.src = link;
+  elementTitle.textContent = name;
 
   // delete card
-  element.querySelector(".element__delete-btn").addEventListener("click", () => element.remove());
+  elementDeleteBtn.addEventListener("click", () => element.remove());
 
   // like card
-  element.querySelector(".element__like").addEventListener("click", (e) => e.target.classList.toggle("element__like_active"));
+  elementLikeBtn.addEventListener("click", (e) => e.target.classList.toggle("element__like_active"));
 
   // open card popup
-  element.querySelector(".element__photo").addEventListener("click", (e) => {
+  elementPhoto.addEventListener("click", (e) => {
     popupOverviewImage.src = link;
     popupOverviewImage.alt = name;
     popupOverviewCaption.textContent = name;
@@ -91,7 +96,7 @@ function createCard(name, link) {
  */
 function addCardsToCardsContainer(initialCards) {
   initialCards.forEach((elem) =>
-    cardsContainer.appendChild(createCard(elem.name, elem.link))
+    cardsContainer.append(createCard(elem.name, elem.link))
   );
 }
 
