@@ -13,7 +13,6 @@ function enableValidation(config) {
       handleFormButton(form, config, submitButton)
     })
 
-    //version with form reset listener
     form.addEventListener('reset', () => {
       clearFormInputsErrors(form, config)
       handleFormButton(form, config, submitButton)
