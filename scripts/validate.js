@@ -9,6 +9,7 @@ function enableValidation(config) {
     const submitButton = form.querySelector(config.submitButtonSelector)
     const inactiveSubmitButton = config.inactiveButtonClass
 
+
     form.addEventListener('input', (event) => {
       handleFormInput(event.target, form, config)
       handleFormButton(form, submitButton, inactiveSubmitButton)

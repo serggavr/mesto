@@ -118,6 +118,7 @@ function clearFormInputsErrors(form) {
  * @param {HTMLElement} popup
  */
 function openPopup(popup) {
+  // popup.querySelector('.popup__form').reset()
   document.addEventListener('keyup', closePopupOnKeyDown)
   popup.addEventListener('mouseup', closePopupOnClickOnOverlay)
   popup.classList.add("popup_opened")
@@ -131,6 +132,7 @@ function closePopup(popup) {
   document.removeEventListener('keyup', closePopupOnKeyDown)
   popup.removeEventListener('mouseup', closePopupOnClickOnOverlay)
   popup.classList.remove("popup_opened")
+  popup.querySelector('.popup__form').reset()
 }
 
 
@@ -189,6 +191,7 @@ function closePopupOnClickOnOverlay(event) {
 
 
 popupChangeProfileOpenBtn.addEventListener("click", () => {
+  // popupChangeProfileForm.reset()
   fillOnLoadProfilePopup()
   clearFormInputsErrors(popupChangeProfileForm)
   handleFormButton(popupChangeProfileForm, popupChangeProfileFormSubmitBtn, formSubmitBtnDisabledClass)
