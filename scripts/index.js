@@ -177,18 +177,10 @@ function closePopupOnClickOnOverlay(event) {
   }
 }
 
-// function clearFormInputsErrors(inputs, inputsErrors) {
-//   inputsErrors.forEach((elem) => elem.textContent = '')
-//   inputs.forEach((elem) => elem.classList.remove('popup__error'))
-// }
-
 
 popupChangeProfileOpenBtn.addEventListener("click", () => {
+  popupChangeProfileForm.reset()
   fillOnLoadProfilePopup()
-
-  // clearFormInputsErrors(popupChangeProfileFormInputs, popupAddElementCardFormInputsErrors)
-  // handleFormButton(popupChangeProfileForm, 'popup__button_disabled', popupChangeProfileFormSubmitBtn)
-
   openPopup(popupChangeProfile);
 });
 
