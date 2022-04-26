@@ -9,7 +9,6 @@ function enableValidation(config) {
     const submitButton = form.querySelector(config.submitButtonSelector)
     const inactiveSubmitButton = config.inactiveButtonClass
 
-
     form.addEventListener('input', (event) => {
       handleFormInput(event.target, form, config)
       handleFormButton(form, submitButton, inactiveSubmitButton)
@@ -45,7 +44,6 @@ function showInputError(input, errorNode, config) {
   errorNode.textContent = input.validationMessage;
   input.classList.add(config.inputErrorClass)
   errorNode.classList.add(config.errorClass)
-
 }
 
 /** Removes an input error if the input value is valid
