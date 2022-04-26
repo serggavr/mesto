@@ -10,6 +10,10 @@ const popupChangeProfileOpenBtn = document.querySelector(".profile__change-butto
 const popupChangeProfileNewName = document.querySelector(".popup__input_type_username");
 const popupChangeProfileNewDescription = document.querySelector(".popup__input_type_description");
 
+// const popupChangeProfileFormInputs = popupChangeProfileForm.querySelectorAll(".popup__input");
+// const popupChangeProfileFormInputsErrors = popupChangeProfileForm.querySelectorAll(".popup__error");
+// const popupChangeProfileFormSubmitBtn = popupChangeProfileForm.querySelector(".popup__button");
+
 // popup_type_add-element-card
 const popupAddElementCard = document.querySelector(".popup_type_add-element-card");
 const popupAddElementCardForm = document.querySelector(".popup__form[name=add-element-card]")
@@ -17,10 +21,15 @@ const popupAddElementCardOpenBtn = document.querySelector(".profile__add-button"
 const popupAddElementCardNewCardName = document.querySelector(".popup__input_type_card-name");
 const popupAddElementCardNewCardLink = document.querySelector(".popup__input_type_image-link");
 
+// const popupAddElementCardFormInputs = popupAddElementCardForm.querySelectorAll(".popup__input");
+// const popupAddElementCardFormInputsErrors = popupAddElementCardForm.querySelectorAll(".popup__error");
+// const popupAddElementCardFormubmitBtn = popupAddElementCardForm.querySelector(".popup__button");
+
 // popup_type_element-overview
 const popupOverview = document.querySelector(".popup_type_element-overview");
 const popupOverviewImage = document.querySelector(".overview__image");
 const popupOverviewCaption = document.querySelector(".overview__caption");
+
 
 // popup close buttons
 const popupClosePopupsButtons = document.querySelectorAll(".popup__close-button");
@@ -82,8 +91,6 @@ function createCard(name, link) {
     popupOverviewImage.src = link;
     popupOverviewImage.alt = name;
     popupOverviewCaption.textContent = name;
-    document.addEventListener('keyup', closePopupOnKeyDown)
-    popupOverview.addEventListener('click', closePopupOnClickOnOverlay)
     openPopup(popupOverview);
   });
 
@@ -105,6 +112,8 @@ function addCardsToCardsContainer(initialCards) {
  * @param {HTMLElement} popup
  */
 function openPopup(popup) {
+  document.addEventListener('keyup', closePopupOnKeyDown)
+  popup.addEventListener('mouseup', closePopupOnClickOnOverlay)
   popup.classList.add("popup_opened")
 }
 
@@ -113,6 +122,8 @@ function openPopup(popup) {
  * @param {HTMLElement} popup
  */
 function closePopup(popup) {
+  document.removeEventListener('keyup', closePopupOnKeyDown)
+  popup.removeEventListener('mouseup', closePopupOnClickOnOverlay)
   popup.classList.remove("popup_opened")
 }
 
@@ -123,14 +134,6 @@ function closePopup(popup) {
 function fillOnLoadProfilePopup() {
   popupChangeProfileNewName.value = profileName.textContent;
   popupChangeProfileNewDescription.value = profileDescription.textContent;
-}
-
-/** Add value from profile to the popup__change_profile
- * 
- */
-function openProfilePopup() {
-  fillOnLoadProfilePopup()
-  openPopup(popupChangeProfile);
 }
 
 /** Add value from popup__change_profile to the profile
@@ -154,48 +157,43 @@ function addNewCard(event) {
   closePopup(popupAddElementCard);
 }
 
-/** Cleans inputs in form
- * 
- * @param {HTMLFormElement} form 
- */
-function clearFormInputs(form) {
-  form.reset()
-}
-
 /** Close popup on key down 'Escape' and remove self listener
  * 
  */
 function closePopupOnKeyDown() {
   if (event.key === "Escape") {
-    popups.forEach((popup) => {
-      popup.classList.remove('popup_opened')
-    })
-    document.removeEventListener('keyup', closePopupOnKeyDown)
+    const openedPopup = document.querySelector('.popup_opened')
+    closePopup(openedPopup)
+
   }
 }
 
 /** Close popup on 'click' on overlay and remove self listener
  * 
  */
-function closePopupOnClickOnOverlay() {
+function closePopupOnClickOnOverlay(event) {
   if (event.target === event.currentTarget) {
     closePopup(event.target)
-    event.target.removeEventListener('click', closePopupOnClickOnOverlay)
   }
 }
 
+// function clearFormInputsErrors(inputs, inputsErrors) {
+//   inputsErrors.forEach((elem) => elem.textContent = '')
+//   inputs.forEach((elem) => elem.classList.remove('popup__error'))
+// }
+
 
 popupChangeProfileOpenBtn.addEventListener("click", () => {
-  clearFormInputs(popupChangeProfileForm)
-  document.addEventListener('keyup', closePopupOnKeyDown)
-  popupChangeProfile.addEventListener('click', closePopupOnClickOnOverlay)
-  openProfilePopup()
+  fillOnLoadProfilePopup()
+
+  // clearFormInputsErrors(popupChangeProfileFormInputs, popupAddElementCardFormInputsErrors)
+  // handleFormButton(popupChangeProfileForm, 'popup__button_disabled', popupChangeProfileFormSubmitBtn)
+
+  openPopup(popupChangeProfile);
 });
 
 popupAddElementCardOpenBtn.addEventListener("click", () => {
-  clearFormInputs(popupAddElementCardForm)
-  document.addEventListener('keyup', closePopupOnKeyDown)
-  popupAddElementCard.addEventListener('click', closePopupOnClickOnOverlay)
+  popupAddElementCardForm.reset()
   openPopup(popupAddElementCard)
 });
 
@@ -209,7 +207,6 @@ popupChangeProfileForm.addEventListener("submit", (event) => {
 
 popupAddElementCardForm.addEventListener("submit", (event) => {
   addNewCard(event)
-  popupAddElementCardForm.reset()
 });
 
 window.onload = () => {

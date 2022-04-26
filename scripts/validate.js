@@ -7,13 +7,18 @@ function enableValidation(config) {
   const formsOpenButtons = document.querySelectorAll(config.formOpenButtonsSelector)
 
   forms.forEach((form) => {
-    form.addEventListener('input', (event) => handleFormInput(event.target, form, config))
-    form.addEventListener('input', () => handleFormButton(form, config))
+    const submitButton = form.querySelector(config.submitButtonSelector)
+    console.log(submitButton)
+
+    form.addEventListener('input', (event) => {
+      handleFormInput(event.target, form, config)
+      handleFormButton(form, config, submitButton)
+    })
 
     formsOpenButtons.forEach((button) => {
       if (button.dataset.button === form.name)
         button.addEventListener('click', () => clearFormInputsErrors(form, config))
-      button.addEventListener('click', () => checkFormValidationOnOpening(form, config))
+      button.addEventListener('click', () => handleFormButton(form, config, submitButton))
     })
   })
 }
@@ -26,9 +31,36 @@ function enableValidation(config) {
  */
 function handleFormInput(input, form, config) {
   const errorNode = form.querySelector(`[data-input=${input.dataset.input}-error]`)
+
+  if (!input.validity.valid) {
+    showInputError(input, errorNode, config)
+  } else {
+    hideInputError(input, errorNode, config)
+  }
+}
+
+/** Shows an input error if the input value is invalid
+ * 
+ * @param {InputEvent} input
+ * @param {HTMLElement} errorNode
+ * @param {object} config
+ */
+function showInputError(input, errorNode, config) {
   errorNode.textContent = input.validationMessage;
-  input.classList.toggle(config.inputErrorClass, !input.validity.valid)
-  errorNode.classList.toggle(config.errorClass, !input.validity.valid)
+  input.classList.add(config.inputErrorClass)
+  errorNode.classList.add(config.errorClass)
+
+}
+
+/** Removes an input error if the input value is valid
+ * 
+ * @param {InputEvent} input
+ * @param {HTMLElement} errorNode
+ * @param {object} config
+ */
+function hideInputError(input, errorNode, config) {
+  input.classList.remove(config.inputErrorClass)
+  errorNode.classList.remove(config.errorClass)
 }
 
 /** Checks and toggles {submitButton} if the form is valid
@@ -36,20 +68,11 @@ function handleFormInput(input, form, config) {
  * @param {HTMLFormElement} form
  * @param {object} config
  */
-function handleFormButton(form, config) {
-  const submitButton = form.querySelector(config.submitButtonSelector)
+function handleFormButton(form, config, submitButton) {
   submitButton.disabled = !form.checkValidity()
   submitButton.classList.toggle(config.inactiveButtonClass, !form.checkValidity())
 }
 
-/** Check form validation on opening
- * 
- * @param {HTMLFormElement} form
- * @param {object} config
- */
-function checkFormValidationOnOpening(form, config) {
-  handleFormButton(form, config)
-}
 
 /** Cleans errors in inputs form
  * 
