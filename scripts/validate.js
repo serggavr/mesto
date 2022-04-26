@@ -7,16 +7,15 @@ function enableValidation(config) {
 
   forms.forEach((form) => {
     const submitButton = form.querySelector(config.submitButtonSelector)
+    const inactiveSubmitButton = config.inactiveButtonClass
+
 
     form.addEventListener('input', (event) => {
       handleFormInput(event.target, form, config)
-      handleFormButton(form, config, submitButton)
+      handleFormButton(form, submitButton, inactiveSubmitButton)
     })
 
-    form.addEventListener('reset', () => {
-      clearFormInputsErrors(form, config)
-      handleFormButton(form, config, submitButton)
-    })
+    handleFormButton(form, submitButton, inactiveSubmitButton)
   })
 }
 
@@ -65,22 +64,10 @@ function hideInputError(input, errorNode, config) {
  * @param {HTMLFormElement} form
  * @param {object} config
  */
-function handleFormButton(form, config, submitButton) {
+function handleFormButton(form, submitButton, inactiveSubmitButton) {
   submitButton.disabled = !form.checkValidity()
-  submitButton.classList.toggle(config.inactiveButtonClass, !form.checkValidity())
+  submitButton.classList.toggle(inactiveSubmitButton, !form.checkValidity())
 }
-
-
-/** Cleans errors in inputs form
- * 
- * @param {HTMLFormElement} form
- * @param {object} config
- */
-function clearFormInputsErrors(form, config) {
-  form.querySelectorAll(config.inputErrorTextSelector).forEach((elem) => elem.textContent = '')
-  form.querySelectorAll(config.inputSelector).forEach((elem) => elem.classList.remove(config.inputErrorClass))
-}
-
 
 enableValidation({
   formSelector: '.popup__form',
