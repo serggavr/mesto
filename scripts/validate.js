@@ -4,22 +4,17 @@
  */
 function enableValidation(config) {
   const forms = document.querySelectorAll(config.formSelector);
-  const formsOpenButtons = document.querySelectorAll(config.formOpenButtonsSelector)
 
   forms.forEach((form) => {
     const submitButton = form.querySelector(config.submitButtonSelector)
-    console.log(submitButton)
+    const inactiveSubmitButton = config.inactiveButtonClass
 
     form.addEventListener('input', (event) => {
       handleFormInput(event.target, form, config)
-      handleFormButton(form, config, submitButton)
+      handleFormButton(form, submitButton, inactiveSubmitButton)
     })
 
-    formsOpenButtons.forEach((button) => {
-      if (button.dataset.button === form.name)
-        button.addEventListener('click', () => clearFormInputsErrors(form, config))
-      button.addEventListener('click', () => handleFormButton(form, config, submitButton))
-    })
+    handleFormButton(form, submitButton, inactiveSubmitButton)
   })
 }
 
@@ -68,28 +63,15 @@ function hideInputError(input, errorNode, config) {
  * @param {HTMLFormElement} form
  * @param {object} config
  */
-function handleFormButton(form, config, submitButton) {
+function handleFormButton(form, submitButton, inactiveSubmitButton) {
   submitButton.disabled = !form.checkValidity()
-  submitButton.classList.toggle(config.inactiveButtonClass, !form.checkValidity())
+  submitButton.classList.toggle(inactiveSubmitButton, !form.checkValidity())
 }
-
-
-/** Cleans errors in inputs form
- * 
- * @param {HTMLFormElement} form
- * @param {object} config
- */
-function clearFormInputsErrors(form, config) {
-  form.querySelectorAll(config.inputErrorTextSelector).forEach((elem) => elem.textContent = '')
-  form.querySelectorAll(config.inputSelector).forEach((elem) => elem.classList.remove(config.inputErrorClass))
-}
-
 
 enableValidation({
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
-  formOpenButtonsSelector: '.open-popup-with-form-button',
   inputErrorTextSelector: '.popup__error',
   inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: 'popup__input_type_error',
