@@ -4,7 +4,6 @@
  */
 function enableValidation(config) {
   const forms = document.querySelectorAll(config.formSelector);
-  const formsOpenButtons = document.querySelectorAll(config.formOpenButtonsSelector)
 
   forms.forEach((form) => {
     const submitButton = form.querySelector(config.submitButtonSelector)
@@ -15,10 +14,10 @@ function enableValidation(config) {
       handleFormButton(form, config, submitButton)
     })
 
-    formsOpenButtons.forEach((button) => {
-      if (button.dataset.button === form.name)
-        button.addEventListener('click', () => clearFormInputsErrors(form, config))
-      button.addEventListener('click', () => handleFormButton(form, config, submitButton))
+    //version with form reset listener
+    form.addEventListener('reset', () => {
+      clearFormInputsErrors(form, config)
+      handleFormButton(form, config, submitButton)
     })
   })
 }
@@ -89,7 +88,6 @@ enableValidation({
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
-  formOpenButtonsSelector: '.open-popup-with-form-button',
   inputErrorTextSelector: '.popup__error',
   inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: 'popup__input_type_error',
