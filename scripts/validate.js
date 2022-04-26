@@ -7,7 +7,6 @@ function enableValidation(config) {
 
   forms.forEach((form) => {
     const submitButton = form.querySelector(config.submitButtonSelector)
-    console.log(submitButton)
 
     form.addEventListener('input', (event) => {
       handleFormInput(event.target, form, config)
