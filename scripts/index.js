@@ -103,16 +103,6 @@ function addCardsToCardsContainer(initialCards) {
   );
 }
 
-/** Cleans errors in inputs form
- * 
- * @param {HTMLFormElement} form
- * @param {object} config
- */
-function clearFormInputsErrors(form) {
-  form.querySelectorAll('.popup__error').forEach((elem) => elem.textContent = '')
-  form.querySelectorAll('.popup__input').forEach((elem) => elem.classList.remove('popup__input_type_error'))
-}
-
 /** Open popup 
  * 
  * @param {HTMLElement} popup
@@ -182,14 +172,12 @@ function closePopupOnClickOnOverlay(event) {
 popupChangeProfileOpenBtn.addEventListener("click", () => {
   fillOnLoadProfilePopup()
   clearFormInputsErrors(popupChangeProfileForm)
-  handleFormButton(popupChangeProfileForm, popupChangeProfileFormSubmitBtn, formSubmitBtnDisabledClass)
   openPopup(popupChangeProfile);
 });
 
 popupAddElementCardOpenBtn.addEventListener("click", () => {
   popupAddElementCardForm.reset()
   clearFormInputsErrors(popupAddElementCardForm)
-  handleFormButton(popupAddElementCardForm, popupAddElementCardFormSubmitBtn, formSubmitBtnDisabledClass)
   openPopup(popupAddElementCard)
 });
 

@@ -1,3 +1,13 @@
+const validatorSelectors = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inputErrorTextSelector: '.popup__error',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible',
+}
+
 /** Enable validation config 
  * 
  * @param {object} config 
@@ -67,12 +77,22 @@ function handleFormButton(form, submitButton, inactiveSubmitButton) {
   submitButton.classList.toggle(inactiveSubmitButton, !form.checkValidity())
 }
 
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inputErrorTextSelector: '.popup__error',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible',
-})
+/** Cleans errors in inputs form
+ * 
+ * @param {HTMLFormElement} form
+ * @param {object} config
+ */
+function clearFormInputsErrors(form) {
+  const submitButton = form.querySelector(validatorSelectors.submitButtonSelector)
+  const inputErrorsText = form.querySelectorAll(validatorSelectors.inputErrorTextSelector)
+  const formInputs = form.querySelectorAll(validatorSelectors.inputSelector)
+
+  // hideInputError(input, errorNode, config)
+
+
+  inputErrorsText.forEach((elem) => elem.textContent = '')
+  formInputs.forEach((elem) => elem.classList.remove(validatorSelectors.inputErrorClass))
+  handleFormButton(form, submitButton, validatorSelectors.inactiveButtonClass)
+}
+
+enableValidation(validatorSelectors)
