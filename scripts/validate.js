@@ -41,7 +41,7 @@ function handleFormInput(input, form, config) {
 /** Shows an input error if the input value is invalid
  * 
  * @param {InputEvent} input
- * @param {HTMLElement} errorNode
+ * @param {HTMLElement} form
  * @param {object} config
  */
 function showInputError(input, form, config) {
@@ -55,7 +55,7 @@ function showInputError(input, form, config) {
 /** Removes an input error if the input value is valid
  * 
  * @param {InputEvent} input
- * @param {HTMLElement} errorNode
+ * @param {HTMLElement} form
  * @param {object} config
  */
 function hideInputError(input, form, config) {
@@ -68,7 +68,8 @@ function hideInputError(input, form, config) {
 /** Checks and toggles {submitButton} if the form is valid
  * 
  * @param {HTMLFormElement} form
- * @param {object} config
+ * @param {HTMLFormElement} submitButton
+ * @param {HTMLFormElement} inactiveSubmitButton
  */
 function toggleFormButton(form, submitButton, inactiveSubmitButton) {
   submitButton.disabled = !form.checkValidity()
@@ -78,7 +79,6 @@ function toggleFormButton(form, submitButton, inactiveSubmitButton) {
 /** Cleans errors in inputs form
  * 
  * @param {HTMLFormElement} form
- * @param {object} config
  */
 function clearFormInputsErrors(form) {
   const submitButton = form.querySelector(validatorSelectors.submitButtonSelector)
