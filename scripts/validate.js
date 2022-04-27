@@ -21,10 +21,10 @@ function enableValidation(config) {
 
     form.addEventListener('input', (event) => {
       handleFormInput(event.target, form, config)
-      handleFormButton(form, submitButton, inactiveSubmitButton)
+      toggleFormButton(form, submitButton, inactiveSubmitButton)
     })
 
-    handleFormButton(form, submitButton, inactiveSubmitButton)
+    toggleFormButton(form, submitButton, inactiveSubmitButton)
   })
 }
 
@@ -35,13 +35,7 @@ function enableValidation(config) {
  * @param {object} config
  */
 function handleFormInput(input, form, config) {
-  const errorNode = form.querySelector(`[data-input=${input.dataset.input}-error]`)
-
-  if (!input.validity.valid) {
-    showInputError(input, errorNode, config)
-  } else {
-    hideInputError(input, errorNode, config)
-  }
+  (!input.validity.valid) ? showInputError(input, form, config): hideInputError(input, form, config);
 }
 
 /** Shows an input error if the input value is invalid
@@ -50,7 +44,9 @@ function handleFormInput(input, form, config) {
  * @param {HTMLElement} errorNode
  * @param {object} config
  */
-function showInputError(input, errorNode, config) {
+function showInputError(input, form, config) {
+  const errorNode = form.querySelector(`[data-input=${input.dataset.input}-error]`)
+
   errorNode.textContent = input.validationMessage;
   input.classList.add(config.inputErrorClass)
   errorNode.classList.add(config.errorClass)
@@ -62,7 +58,9 @@ function showInputError(input, errorNode, config) {
  * @param {HTMLElement} errorNode
  * @param {object} config
  */
-function hideInputError(input, errorNode, config) {
+function hideInputError(input, form, config) {
+  const errorNode = form.querySelector(`[data-input=${input.dataset.input}-error]`)
+
   input.classList.remove(config.inputErrorClass)
   errorNode.classList.remove(config.errorClass)
 }
@@ -72,7 +70,7 @@ function hideInputError(input, errorNode, config) {
  * @param {HTMLFormElement} form
  * @param {object} config
  */
-function handleFormButton(form, submitButton, inactiveSubmitButton) {
+function toggleFormButton(form, submitButton, inactiveSubmitButton) {
   submitButton.disabled = !form.checkValidity()
   submitButton.classList.toggle(inactiveSubmitButton, !form.checkValidity())
 }
@@ -84,15 +82,10 @@ function handleFormButton(form, submitButton, inactiveSubmitButton) {
  */
 function clearFormInputsErrors(form) {
   const submitButton = form.querySelector(validatorSelectors.submitButtonSelector)
-  const inputErrorsText = form.querySelectorAll(validatorSelectors.inputErrorTextSelector)
   const formInputs = form.querySelectorAll(validatorSelectors.inputSelector)
 
-  // hideInputError(input, errorNode, config)
-
-
-  inputErrorsText.forEach((elem) => elem.textContent = '')
-  formInputs.forEach((elem) => elem.classList.remove(validatorSelectors.inputErrorClass))
-  handleFormButton(form, submitButton, validatorSelectors.inactiveButtonClass)
+  formInputs.forEach((input) => hideInputError(input, form, validatorSelectors))
+  toggleFormButton(form, submitButton, validatorSelectors.inactiveButtonClass)
 }
 
 enableValidation(validatorSelectors)

@@ -9,7 +9,6 @@ const popupChangeProfileForm = document.querySelector(".popup__form[name=edit-pr
 const popupChangeProfileOpenBtn = document.querySelector(".profile__change-button");
 const popupChangeProfileNewName = popupChangeProfileForm.querySelector(".popup__input_type_username");
 const popupChangeProfileNewDescription = popupChangeProfileForm.querySelector(".popup__input_type_description");
-const popupChangeProfileFormSubmitBtn = popupChangeProfileForm.querySelector(".popup__button");
 
 // popup_type_add-element-card
 const popupAddElementCard = document.querySelector(".popup_type_add-element-card");
@@ -17,10 +16,6 @@ const popupAddElementCardForm = document.querySelector(".popup__form[name=add-el
 const popupAddElementCardOpenBtn = document.querySelector(".profile__add-button");
 const popupAddElementCardNewCardName = popupAddElementCardForm.querySelector(".popup__input_type_card-name");
 const popupAddElementCardNewCardLink = popupAddElementCardForm.querySelector(".popup__input_type_image-link");
-const popupAddElementCardFormSubmitBtn = popupAddElementCardForm.querySelector(".popup__button");
-
-// form submit button disabled class (for .popup__button)
-const formSubmitBtnDisabledClass = "popup__button_disabled";
 
 // popup_type_element-overview
 const popupOverview = document.querySelector(".popup_type_element-overview");
