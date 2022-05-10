@@ -2,9 +2,11 @@ import {
   openPopup
 } from './index.js';
 
+
 const popupOverview = document.querySelector(".popup_type_element-overview");
 const popupOverviewImage = document.querySelector(".overview__image");
 const popupOverviewCaption = document.querySelector(".overview__caption");
+
 
 class Card {
   constructor(name, link, template) {
@@ -12,7 +14,6 @@ class Card {
     this._link = link;
     this._template = template;
   }
-
 
   _getTemplate() {
     const cardElement = this._template.content.querySelector(".element").cloneNode(true);
@@ -56,6 +57,7 @@ class Card {
     openPopup(popupOverview);
   }
 }
+
 
 export {
   Card
