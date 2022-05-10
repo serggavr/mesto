@@ -10,7 +10,6 @@ import {
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__subtitle");
 const cardsContainer = document.querySelector(".elements__list");
-const popups = document.querySelectorAll(".popup");
 
 // popup_type_change_profile
 const popupChangeProfile = document.querySelector(".popup_type_change-profile");
@@ -19,6 +18,7 @@ const popupChangeProfileOpenBtn = document.querySelector(".profile__change-butto
 const popupChangeProfileNewName = popupChangeProfileForm.querySelector(".popup__input_type_username");
 const popupChangeProfileNewDescription = popupChangeProfileForm.querySelector(".popup__input_type_description");
 
+//enable validation popupChangeProfileForm
 const popupChangeProfileFormValidation = new FormValidator(validatorSelectors, popupChangeProfileForm)
 popupChangeProfileFormValidation.enableValidation()
 
@@ -29,6 +29,7 @@ const popupAddElementCardOpenBtn = document.querySelector(".profile__add-button"
 const popupAddElementCardNewCardName = popupAddElementCardForm.querySelector(".popup__input_type_card-name");
 const popupAddElementCardNewCardLink = popupAddElementCardForm.querySelector(".popup__input_type_image-link");
 
+//enable validation popupAddElementCardForm
 const popupAddElementCardFormValidation = new FormValidator(validatorSelectors, popupAddElementCardForm)
 popupAddElementCardFormValidation.enableValidation()
 

@@ -25,10 +25,10 @@ class FormValidator {
     this._toggleFormButton();
   }
 
-  _setEventListeners(submitButton) {
+  _setEventListeners() {
     this.form.addEventListener('input', (event) => {
       this._handleFormInput(event.target);
-      this._toggleFormButton(submitButton);
+      this._toggleFormButton();
     })
   }
 
