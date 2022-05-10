@@ -8,87 +8,66 @@ const validatorSelectors = {
   errorClass: 'popup__error_visible',
 };
 
-/** Enable validation config 
- * 
- * @param {object} config 
- */
-function enableValidation(config) {
-  const forms = document.querySelectorAll(config.formSelector);
+class FormValidator {
+  constructor(validatorSelectors, form) {
+    this.form = form
+    this._formSelector = validatorSelectors.formSelector
+    this._inputSelector = validatorSelectors.inputSelector
+    this._submitButtonSelector = validatorSelectors.submitButtonSelector
+    this._inputErrorTextSelector = validatorSelectors.inputErrorTextSelector
+    this._inactiveButtonClass = validatorSelectors.inactiveButtonClass
+    this._inputErrorClass = validatorSelectors.inputErrorClass
+    this._errorClass = validatorSelectors.errorClass
+  }
 
-  forms.forEach((form) => {
-    const submitButton = form.querySelector(config.submitButtonSelector);
-    const inactiveSubmitButton = config.inactiveButtonClass;
+  enableValidation() {
+    this._setEventListeners()
+    this._toggleFormButton();
+  }
 
-    form.addEventListener('input', (event) => {
-      handleFormInput(event.target, form, config);
-      toggleFormButton(form, submitButton, inactiveSubmitButton);
+  _setEventListeners(submitButton) {
+    this.form.addEventListener('input', (event) => {
+      this._handleFormInput(event.target);
+      this._toggleFormButton(submitButton);
+    })
+  }
+
+  _handleFormInput(input) {
+    const errorNode = this.form.querySelector(`[data-input=${input.dataset.input}-error]`);
+    (!input.validity.valid) ? this._showInputError(input, errorNode): this._hideInputError(input, errorNode);
+  }
+
+  _showInputError(input, errorNode) {
+    errorNode.textContent = input.validationMessage;
+    input.classList.add(this._inputErrorClass);
+    errorNode.classList.add(this._errorClass);
+  }
+
+  _hideInputError(input, errorNode) {
+    input.classList.remove(this._inputErrorClass);
+    errorNode.classList.remove(this._errorClass);
+  }
+
+  _toggleFormButton() {
+    const submitButton = this.form.querySelector(this._submitButtonSelector);
+    submitButton.disabled = !this.form.checkValidity();
+    submitButton.classList.toggle(this._inactiveButtonClass, !this.form.checkValidity());
+  }
+
+  clearFormInputsErrors() {
+    const formInputs = this.form.querySelectorAll(this._inputSelector);
+
+    formInputs.forEach((input) => {
+      const errorNode = this.form.querySelector(`[data-input=${input.dataset.input}-error]`);
+
+      this._hideInputError(input, errorNode)
     })
 
-    toggleFormButton(form, submitButton, inactiveSubmitButton);
-  })
+    this._toggleFormButton();
+  }
+};
+
+export {
+  FormValidator,
+  validatorSelectors
 }
-
-/** Checks and toggles {errorNode} if values in inputs in the form is valid
- * 
- * @param {InputEvent} input
- * @param {HTMLFormElement} form
- * @param {object} config
- */
-function handleFormInput(input, form, config) {
-  const errorNode = form.querySelector(`[data-input=${input.dataset.input}-error]`);
-
-  (!input.validity.valid) ? showInputError(input, errorNode, config): hideInputError(input, errorNode, config);
-}
-
-/** Shows an input error if the input value is invalid
- * 
- * @param {InputEvent} input
- * @param {HTMLElement} form
- * @param {object} config
- */
-function showInputError(input, errorNode, config) {
-  errorNode.textContent = input.validationMessage;
-  input.classList.add(config.inputErrorClass);
-  errorNode.classList.add(config.errorClass);
-}
-
-/** Removes an input error if the input value is valid
- * 
- * @param {InputEvent} input
- * @param {HTMLElement} form
- * @param {object} config
- */
-function hideInputError(input, errorNode, config) {
-  input.classList.remove(config.inputErrorClass);
-  errorNode.classList.remove(config.errorClass);
-}
-
-/** Checks and toggles {submitButton} if the form is valid
- * 
- * @param {HTMLFormElement} form
- * @param {HTMLFormElement} submitButton
- * @param {HTMLFormElement} inactiveSubmitButton
- */
-function toggleFormButton(form, submitButton, inactiveSubmitButton) {
-  submitButton.disabled = !form.checkValidity();
-  submitButton.classList.toggle(inactiveSubmitButton, !form.checkValidity());
-}
-
-/** Cleans errors in inputs form
- * 
- * @param {HTMLFormElement} form
- */
-function clearFormInputsErrors(form) {
-  const submitButton = form.querySelector(validatorSelectors.submitButtonSelector);
-  const formInputs = form.querySelectorAll(validatorSelectors.inputSelector);
-
-  formInputs.forEach((input) => {
-    const errorNode = form.querySelector(`[data-input=${input.dataset.input}-error]`);
-
-    hideInputError(input, errorNode, validatorSelectors);
-  })
-
-  toggleFormButton(form, submitButton, validatorSelectors.inactiveButtonClass);
-}
-
-enableValidation(validatorSelectors);

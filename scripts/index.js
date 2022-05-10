@@ -2,6 +2,11 @@ import {
   Card
 } from './card.js'
 
+import {
+  FormValidator,
+  validatorSelectors
+} from './validate.js'
+
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__subtitle");
 const cardsContainer = document.querySelector(".elements__list");
@@ -14,12 +19,18 @@ const popupChangeProfileOpenBtn = document.querySelector(".profile__change-butto
 const popupChangeProfileNewName = popupChangeProfileForm.querySelector(".popup__input_type_username");
 const popupChangeProfileNewDescription = popupChangeProfileForm.querySelector(".popup__input_type_description");
 
+const popupChangeProfileFormValidation = new FormValidator(validatorSelectors, popupChangeProfileForm)
+popupChangeProfileFormValidation.enableValidation()
+
 // popup_type_add-element-card
 const popupAddElementCard = document.querySelector(".popup_type_add-element-card");
 const popupAddElementCardForm = document.querySelector(".popup__form[name=add-element-card]");
 const popupAddElementCardOpenBtn = document.querySelector(".profile__add-button");
 const popupAddElementCardNewCardName = popupAddElementCardForm.querySelector(".popup__input_type_card-name");
 const popupAddElementCardNewCardLink = popupAddElementCardForm.querySelector(".popup__input_type_image-link");
+
+const popupAddElementCardFormValidation = new FormValidator(validatorSelectors, popupAddElementCardForm)
+popupAddElementCardFormValidation.enableValidation()
 
 // popup close buttons
 const popupClosePopupsButtons = document.querySelectorAll(".popup__close-button");
@@ -103,7 +114,7 @@ function changeProfileContent(event) {
  */
 function addNewCard(event) {
   event.preventDefault();
-  cardsContainer.prepend(createCard(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value));
+  cardsContainer.prepend(new Card(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value, cardTemplate).createCard());
   closePopup(popupAddElementCard);
 }
 
@@ -126,16 +137,15 @@ function closePopupOnClickOnOverlay(event) {
   }
 }
 
-
 popupChangeProfileOpenBtn.addEventListener("click", () => {
   fillOnLoadProfilePopup();
-  clearFormInputsErrors(popupChangeProfileForm);
+  popupChangeProfileFormValidation.clearFormInputsErrors()
   openPopup(popupChangeProfile);
 });
 
 popupAddElementCardOpenBtn.addEventListener("click", () => {
   popupAddElementCardForm.reset();
-  clearFormInputsErrors(popupAddElementCardForm);
+  popupAddElementCardFormValidation.clearFormInputsErrors()
   openPopup(popupAddElementCard);
 });
 
@@ -153,6 +163,7 @@ popupAddElementCardForm.addEventListener("submit", (event) => {
 
 addCardsToCardsContainer(initialCards);
 fillOnLoadProfilePopup();
+
 
 export {
   openPopup
