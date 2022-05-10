@@ -1,3 +1,7 @@
+import {
+  Card
+} from './card.js'
+
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__subtitle");
 const cardsContainer = document.querySelector(".elements__list");
@@ -17,16 +21,9 @@ const popupAddElementCardOpenBtn = document.querySelector(".profile__add-button"
 const popupAddElementCardNewCardName = popupAddElementCardForm.querySelector(".popup__input_type_card-name");
 const popupAddElementCardNewCardLink = popupAddElementCardForm.querySelector(".popup__input_type_image-link");
 
-// popup_type_element-overview
-const popupOverview = document.querySelector(".popup_type_element-overview");
-const popupOverviewImage = document.querySelector(".overview__image");
-const popupOverviewCaption = document.querySelector(".overview__caption");
-
 // popup close buttons
 const popupClosePopupsButtons = document.querySelectorAll(".popup__close-button");
 
-// card template
-const elementTemplate = document.querySelector("#element").content;
 
 const initialCards = [{
     name: "Архыз",
@@ -54,48 +51,14 @@ const initialCards = [{
   },
 ];
 
-
-/** create element card
- * 
- * @param {string} name 
- * @param {string} link 
- * @returns {HTMLElement}
- */
-function createCard(name, link) {
-  const element = elementTemplate.querySelector(".element").cloneNode(true);
-  const elementPhoto = element.querySelector(".element__photo");
-  const elementTitle = element.querySelector(".element__title");
-  const elementDeleteBtn = element.querySelector(".element__delete-btn");
-  const elementLikeBtn = element.querySelector(".element__like");
-
-  elementPhoto.src = link;
-  elementTitle.textContent = name;
-
-  // delete card
-  elementDeleteBtn.addEventListener("click", () => element.remove());
-
-  // like card
-  elementLikeBtn.addEventListener("click", (e) => e.target.classList.toggle("element__like_active"));
-
-  // open card popup
-  elementPhoto.addEventListener("click", (e) => {
-    popupOverviewImage.src = link;
-    popupOverviewImage.alt = name;
-    popupOverviewCaption.textContent = name;
-    openPopup(popupOverview);
-  });
-
-  return element;
-}
-
 /** Add card to element__list
  * 
  * @param {Array} initialCards 
  */
 function addCardsToCardsContainer(initialCards) {
-  initialCards.forEach((elem) =>
-    cardsContainer.append(createCard(elem.name, elem.link))
-  );
+  initialCards.forEach((elem) => {
+    cardsContainer.append(new Card(elem.name, elem.link, cardTemplate).createCard())
+  });
 }
 
 /** Open popup 
@@ -190,3 +153,7 @@ popupAddElementCardForm.addEventListener("submit", (event) => {
 
 addCardsToCardsContainer(initialCards);
 fillOnLoadProfilePopup();
+
+export {
+  openPopup
+}
