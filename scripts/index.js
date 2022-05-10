@@ -7,6 +7,7 @@ import {
   validatorSelectors
 } from './validate.js'
 
+
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__subtitle");
 const cardsContainer = document.querySelector(".elements__list");
