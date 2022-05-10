@@ -8,6 +8,7 @@ const validatorSelectors = {
   errorClass: 'popup__error_visible',
 };
 
+
 class FormValidator {
   constructor(validatorSelectors, form) {
     this.form = form
@@ -66,6 +67,7 @@ class FormValidator {
     this._toggleFormButton();
   }
 };
+
 
 export {
   FormValidator,
