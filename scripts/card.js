@@ -17,8 +17,8 @@ class Card {
 
   _getTemplate() {
     this._template = document.querySelector(this._templateSelector);
-    this._cardElement = this._template.content.querySelector(".element").cloneNode(true);
-    return this._cardElement;
+    this._cardTemplate = this._template.content.querySelector(".element").cloneNode(true);
+    return this._cardTemplate;
   }
 
   createCard() {
