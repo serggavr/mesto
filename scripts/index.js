@@ -66,13 +66,17 @@ const initialCards = [{
   },
 ];
 
+function createCard(name, link, templateSelector) {
+  return new Card(name, link, templateSelector).createCard()
+}
+
 /** Add card to element__list
  * 
  * @param {Array} initialCards 
  */
 function addCardsToCardsContainer(initialCards) {
   initialCards.forEach((elem) => {
-    cardsContainer.append(new Card(elem.name, elem.link, cardTemplate).createCard())
+    cardsContainer.append(createCard(elem.name, elem.link, cardTemplate))
   });
 }
 
@@ -118,7 +122,7 @@ function changeProfileContent(event) {
  */
 function addNewCard(event) {
   event.preventDefault();
-  cardsContainer.prepend(new Card(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value, cardTemplate).createCard());
+  cardsContainer.prepend(createCard(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value, cardTemplate));
   closePopup(popupAddElementCard);
 }
 
