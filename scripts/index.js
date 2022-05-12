@@ -3,10 +3,19 @@ import {
 } from './card.js'
 
 import {
-  FormValidator,
-  validatorSelectors
+  FormValidator
 } from './validate.js'
 
+
+const validatorSelectors = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inputErrorTextSelector: '.popup__error',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible',
+};
 
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__subtitle");
@@ -65,6 +74,8 @@ const initialCards = [{
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
 ];
+
+
 
 function createCard(name, link, templateSelector) {
   return new Card(name, link, templateSelector).createCard()
