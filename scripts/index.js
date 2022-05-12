@@ -3,10 +3,19 @@ import {
 } from './card.js'
 
 import {
-  FormValidator,
-  validatorSelectors
+  FormValidator
 } from './validate.js'
 
+
+const validatorSelectors = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inputErrorTextSelector: '.popup__error',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible',
+};
 
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__subtitle");
@@ -37,6 +46,8 @@ popupAddElementCardFormValidation.enableValidation()
 // popup close buttons
 const popupClosePopupsButtons = document.querySelectorAll(".popup__close-button");
 
+const cardTemplate = "#cardTemplate";
+
 
 const initialCards = [{
     name: "Архыз",
@@ -64,13 +75,19 @@ const initialCards = [{
   },
 ];
 
+
+
+function createCard(name, link, templateSelector) {
+  return new Card(name, link, templateSelector).createCard()
+}
+
 /** Add card to element__list
  * 
  * @param {Array} initialCards 
  */
 function addCardsToCardsContainer(initialCards) {
   initialCards.forEach((elem) => {
-    cardsContainer.append(new Card(elem.name, elem.link, cardTemplate).createCard())
+    cardsContainer.append(createCard(elem.name, elem.link, cardTemplate))
   });
 }
 
@@ -116,7 +133,7 @@ function changeProfileContent(event) {
  */
 function addNewCard(event) {
   event.preventDefault();
-  cardsContainer.prepend(new Card(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value, cardTemplate).createCard());
+  cardsContainer.prepend(createCard(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value, cardTemplate));
   closePopup(popupAddElementCard);
 }
 

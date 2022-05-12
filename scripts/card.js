@@ -9,45 +9,48 @@ const popupOverviewCaption = document.querySelector(".overview__caption");
 
 
 class Card {
-  constructor(name, link, template) {
+  constructor(name, link, templateSelector) {
     this._name = name;
     this._link = link;
-    this._template = template;
+    this._templateSelector = templateSelector;
   }
 
   _getTemplate() {
-    const cardElement = this._template.content.querySelector(".element").cloneNode(true);
-    return cardElement;
+    this._template = document.querySelector(this._templateSelector);
+    this._cardElement = this._template.content.querySelector(".element").cloneNode(true);
+    return this._cardElement;
   }
 
   createCard() {
     this._card = this._getTemplate();
 
-    const elementPhoto = this._card.querySelector(".element__photo");
-    const elementTitle = this._card.querySelector(".element__title");
-    const elementDeleteBtn = this._card.querySelector(".element__delete-btn");
-    const elementLikeBtn = this._card.querySelector(".element__like");
+    this._elementPhoto = this._card.querySelector(".element__photo");
+    this._elementTitle = this._card.querySelector(".element__title");
+    this._elementDeleteBtn = this._card.querySelector(".element__delete-btn");
+    this._elementLikeBtn = this._card.querySelector(".element__like");
 
-    elementPhoto.src = this._link;
-    elementTitle.textContent = this._name;
+    this._elementPhoto.src = this._link;
+    this._elementPhoto.alt = this._name;
+    this._elementTitle.textContent = this._name;
 
-    this._setEventListeners(elementDeleteBtn, elementLikeBtn, elementPhoto);
+    this._setEventListeners();
 
     return this._card;
   }
 
-  _setEventListeners(elementDeleteBtn, elementLikeBtn, elementPhoto) {
-    elementDeleteBtn.addEventListener("click", () => this._deleteCard());
-    elementLikeBtn.addEventListener("click", (e) => this._likeCard(e));
-    elementPhoto.addEventListener("click", (e) => this._openCardPopup(e));
+  _setEventListeners() {
+    this._elementDeleteBtn.addEventListener("click", () => this._deleteCard());
+    this._elementLikeBtn.addEventListener("click", (e) => this._likeCard(e));
+    this._elementPhoto.addEventListener("click", (e) => this._openCardPopup(e));
   }
 
   _deleteCard() {
     this._card.remove();
+    this._card = null;
   }
 
   _likeCard(e) {
-    e.target.classList.toggle("element__like_active");
+    this._elementLikeBtn.classList.toggle("element__like_active");
   }
 
   _openCardPopup() {
