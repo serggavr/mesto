@@ -37,6 +37,8 @@ popupAddElementCardFormValidation.enableValidation()
 // popup close buttons
 const popupClosePopupsButtons = document.querySelectorAll(".popup__close-button");
 
+const cardTemplate = "#cardTemplate";
+
 
 const initialCards = [{
     name: "Архыз",

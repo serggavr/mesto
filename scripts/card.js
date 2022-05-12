@@ -9,15 +9,16 @@ const popupOverviewCaption = document.querySelector(".overview__caption");
 
 
 class Card {
-  constructor(name, link, template) {
+  constructor(name, link, templateSelector) {
     this._name = name;
     this._link = link;
-    this._template = template;
+    this._templateSelector = templateSelector;
   }
 
   _getTemplate() {
-    const cardElement = this._template.content.querySelector(".element").cloneNode(true);
-    return cardElement;
+    this._template = document.querySelector(this._templateSelector);
+    this._cardElement = this._template.content.querySelector(".element").cloneNode(true);
+    return this._cardElement;
   }
 
   createCard() {
