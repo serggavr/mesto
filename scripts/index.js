@@ -1,10 +1,11 @@
 import {
   Card
-} from './card.js'
+} from './Card.js'
+import Section from './Section.js';
 
 import {
   FormValidator
-} from './validate.js'
+} from './Validate.js'
 
 
 const validatorSelectors = {
@@ -19,7 +20,7 @@ const validatorSelectors = {
 
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__subtitle");
-const cardsContainer = document.querySelector(".elements__list");
+// const cardsContainer = document.querySelector(".elements__list");
 
 // popup_type_change_profile
 const popupChangeProfile = document.querySelector(".popup_type_change-profile");
@@ -47,6 +48,7 @@ popupAddElementCardFormValidation.enableValidation()
 const popupClosePopupsButtons = document.querySelectorAll(".popup__close-button");
 
 const cardTemplate = "#cardTemplate";
+const cardsContainer = ".elements__list"
 
 
 const initialCards = [{
@@ -75,21 +77,30 @@ const initialCards = [{
   },
 ];
 
-
-
 function createCard(name, link, templateSelector) {
   return new Card(name, link, templateSelector).createCard()
 }
+
+const cardsList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const cardElement = createCard(item.name, item.link, cardTemplate)
+    cardsList.addItem(cardElement);
+  }
+}, cardsContainer)
+
+
+
 
 /** Add card to element__list
  * 
  * @param {Array} initialCards 
  */
-function addCardsToCardsContainer(initialCards) {
-  initialCards.forEach((elem) => {
-    cardsContainer.append(createCard(elem.name, elem.link, cardTemplate))
-  });
-}
+// function addCardsToCardsContainer(initialCards) {
+//   initialCards.forEach((elem) => {
+//     cardsContainer.append(createCard(elem.name, elem.link, cardTemplate))
+//   });
+// }
 
 /** Open popup 
  * 
@@ -133,7 +144,7 @@ function changeProfileContent(event) {
  */
 function addNewCard(event) {
   event.preventDefault();
-  cardsContainer.prepend(createCard(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value, cardTemplate));
+  cardsList.addItemToTopOfList(createCard(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value, cardTemplate));
   closePopup(popupAddElementCard);
 }
 
@@ -180,7 +191,8 @@ popupAddElementCardForm.addEventListener("submit", (event) => {
   addNewCard(event);
 });
 
-addCardsToCardsContainer(initialCards);
+// addCardsToCardsContainer(initialCards);
+cardsList.renderItems()
 fillOnLoadProfilePopup();
 
 
