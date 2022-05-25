@@ -1,6 +1,7 @@
 import {
   Card
 } from './Card.js'
+import Popup from './Popup.js';
 import Section from './Section.js';
 
 import {
@@ -23,7 +24,9 @@ const profileDescription = document.querySelector(".profile__subtitle");
 // const cardsContainer = document.querySelector(".elements__list");
 
 // popup_type_change_profile
-const popupChangeProfile = document.querySelector(".popup_type_change-profile");
+const changeProfilePopupSelector = ".popup_type_change-profile";
+const popupChangeProfile = new Popup(changeProfilePopupSelector)
+// const popupChangeProfile = document.querySelector(".popup_type_change-profile");
 const popupChangeProfileForm = document.querySelector(".popup__form[name=edit-profile]");
 const popupChangeProfileOpenBtn = document.querySelector(".profile__change-button");
 const popupChangeProfileNewName = popupChangeProfileForm.querySelector(".popup__input_type_username");
@@ -34,7 +37,9 @@ const popupChangeProfileFormValidation = new FormValidator(validatorSelectors, p
 popupChangeProfileFormValidation.enableValidation()
 
 // popup_type_add-element-card
-const popupAddElementCard = document.querySelector(".popup_type_add-element-card");
+const AddElementCardPopupSelector = ".popup_type_add-element-card"
+const popupAddElementCard = new Popup(AddElementCardPopupSelector)
+// const popupAddElementCard = document.querySelector(".popup_type_add-element-card");
 const popupAddElementCardForm = document.querySelector(".popup__form[name=add-element-card]");
 const popupAddElementCardOpenBtn = document.querySelector(".profile__add-button");
 const popupAddElementCardNewCardName = popupAddElementCardForm.querySelector(".popup__input_type_card-name");
@@ -45,7 +50,7 @@ const popupAddElementCardFormValidation = new FormValidator(validatorSelectors, 
 popupAddElementCardFormValidation.enableValidation()
 
 // popup close buttons
-const popupClosePopupsButtons = document.querySelectorAll(".popup__close-button");
+// const popupClosePopupsButtons = document.querySelectorAll(".popup__close-button");
 
 const cardTemplate = "#cardTemplate";
 const cardsContainer = ".elements__list"
@@ -89,9 +94,6 @@ const cardsList = new Section({
   }
 }, cardsContainer)
 
-
-
-
 /** Add card to element__list
  * 
  * @param {Array} initialCards 
@@ -106,21 +108,21 @@ const cardsList = new Section({
  * 
  * @param {HTMLElement} popup
  */
-function openPopup(popup) {
-  document.addEventListener('keyup', closePopupOnKeyDown);
-  popup.addEventListener('mouseup', closePopupOnClickOnOverlay);
-  popup.classList.add("popup_opened");
-}
+// function openPopup(popup) {
+//   document.addEventListener('keyup', closePopupOnKeyDown);
+//   popup.addEventListener('mouseup', closePopupOnClickOnOverlay);
+//   popup.classList.add("popup_opened");
+// }
 
 /** Close popups 
  * 
  * @param {HTMLElement} popup
  */
-function closePopup(popup) {
-  document.removeEventListener('keyup', closePopupOnKeyDown);
-  popup.removeEventListener('mouseup', closePopupOnClickOnOverlay);
-  popup.classList.remove("popup_opened");
-}
+// function closePopup(popup) {
+//   document.removeEventListener('keyup', closePopupOnKeyDown);
+//   popup.removeEventListener('mouseup', closePopupOnClickOnOverlay);
+//   popup.classList.remove("popup_opened");
+// }
 
 function fillOnLoadProfilePopup() {
   popupChangeProfileNewName.value = profileName.textContent;
@@ -135,7 +137,7 @@ function changeProfileContent(event) {
   event.preventDefault();
   profileName.textContent = popupChangeProfileNewName.value;
   profileDescription.textContent = popupChangeProfileNewDescription.value;
-  closePopup(popupChangeProfile);
+  popupChangeProfile.close();
 }
 
 /** Add new card to element__list
@@ -145,43 +147,43 @@ function changeProfileContent(event) {
 function addNewCard(event) {
   event.preventDefault();
   cardsList.addItemToTopOfList(createCard(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value, cardTemplate));
-  closePopup(popupAddElementCard);
+  popupAddElementCard.close();
 }
 
 /** Close popup on key down 'Escape' and remove self listener
  * 
  */
-function closePopupOnKeyDown() {
-  if (event.key === "Escape") {
-    const openedPopup = document.querySelector('.popup_opened');
-    closePopup(openedPopup);
-  }
-}
+// function closePopupOnKeyDown() {
+//   if (event.key === "Escape") {
+//     const openedPopup = document.querySelector('.popup_opened');
+//     closePopup(openedPopup);
+//   }
+// }
 
 /** Close popup on 'click' on overlay and remove self listener
  * 
  */
-function closePopupOnClickOnOverlay(event) {
-  if (event.target === event.currentTarget) {
-    closePopup(event.target);
-  }
-}
+// function closePopupOnClickOnOverlay(event) {
+//   if (event.target === event.currentTarget) {
+//     closePopup(event.target);
+//   }
+// }
 
 popupChangeProfileOpenBtn.addEventListener("click", () => {
   fillOnLoadProfilePopup();
   popupChangeProfileFormValidation.clearFormInputsErrors()
-  openPopup(popupChangeProfile);
+  popupChangeProfile.open()
 });
 
 popupAddElementCardOpenBtn.addEventListener("click", () => {
   popupAddElementCardForm.reset();
   popupAddElementCardFormValidation.clearFormInputsErrors()
-  openPopup(popupAddElementCard);
+  popupAddElementCard.open()
 });
 
-popupClosePopupsButtons.forEach((elem) => elem.addEventListener("click", () => {
-  closePopup(elem.closest(".popup"));
-}));
+// popupClosePopupsButtons.forEach((elem) => elem.addEventListener("click", () => {
+//   closePopup(elem.closest(".popup"));
+// }));
 
 popupChangeProfileForm.addEventListener("submit", (event) => {
   changeProfileContent(event);
@@ -196,6 +198,6 @@ cardsList.renderItems()
 fillOnLoadProfilePopup();
 
 
-export {
-  openPopup
-}
+// export {
+//   openPopup
+// }

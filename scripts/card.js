@@ -1,11 +1,16 @@
-import {
-  openPopup
-} from './index.js';
+// import {
+//   openPopup
+// } from './index.js';
+
+import
+PopupWithImage
+from './PopupWithImage.js';
 
 
-const popupOverview = document.querySelector(".popup_type_element-overview");
-const popupOverviewImage = document.querySelector(".overview__image");
-const popupOverviewCaption = document.querySelector(".overview__caption");
+// const popupOverview = document.querySelector(".popup_type_element-overview");
+const popupOverview = ".popup_type_element-overview";
+// const popupOverviewImage = document.querySelector(".overview__image");
+// const popupOverviewCaption = document.querySelector(".overview__caption");
 
 
 class Card {
@@ -53,10 +58,12 @@ class Card {
   }
 
   _openCardPopup() {
-    popupOverviewImage.src = this._link;
-    popupOverviewImage.alt = this._name;
-    popupOverviewCaption.textContent = this._name;
-    openPopup(popupOverview);
+    // popupOverviewImage.src = this._link;
+    // popupOverviewImage.alt = this._name;
+    // popupOverviewCaption.textContent = this._name;
+    // openPopup(popupOverview);
+    const CardPopup = new PopupWithImage(this._name, this._link, popupOverview)
+    CardPopup.open()
   }
 }
 
