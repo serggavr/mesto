@@ -16,12 +16,7 @@ export default class Section {
     this._container.prepend(element)
   }
 
-  // clear() {
-  //   this._container.innerHTML = '';
-  // }
-
   renderItems() {
-    // this.clear()
     this._renderedItems.forEach(item => {
       this._renderer(item)
     })
