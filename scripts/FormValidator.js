@@ -1,4 +1,4 @@
-class FormValidator {
+export default class FormValidator {
   constructor(validatorSelectors, form) {
     this._form = form
     this._inputSelector = validatorSelectors.inputSelector
@@ -53,8 +53,3 @@ class FormValidator {
     this._toggleFormButton();
   }
 };
-
-
-export {
-  FormValidator
-}

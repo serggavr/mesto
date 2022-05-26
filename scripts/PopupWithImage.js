@@ -8,15 +8,11 @@ export default class PopupWithImage extends Popup {
   }
 
   open() {
+    super.open()
     this._overviewImage = document.querySelector(".overview__image")
-    this._overviewCaption = document.querySelector(".overview__image")
+    this._overviewCaption = document.querySelector(".overview__caption")
     this._overviewImage.src = this._link;
     this._overviewImage.alt = this._name;
     this._overviewCaption.textContent = this._name;
-
-    super.setEventListeners()
-    this._popup.classList.add("popup_opened");
   }
-
-
 }
