@@ -40,14 +40,18 @@ const userInfo = new UserInfo({
   userDescriptionSelector: profileDescriptionSelector
 })
 
+const CardPopup = new PopupWithImage(popupOverviewSelector)
+
 const handleCardClick = (cardPhoto, cardName, cardLink) => {
   cardPhoto.addEventListener("click", (e) => {
-    const CardPopup = new PopupWithImage(cardName, cardLink, popupOverviewSelector)
-    CardPopup.open()
+    CardPopup.open(cardName, cardLink)
   })
 }
 
-function createCard(name, link, templateSelector) {
+function createCard({
+  name,
+  link
+}, templateSelector) {
   const newCard = new Card(name, link, templateSelector, {
     handleCardClick: handleCardClick
   }).createCard()
@@ -57,7 +61,7 @@ function createCard(name, link, templateSelector) {
 const cardsList = new Section({
     items: initialCards,
     renderer: (item) => {
-      const cardElement = createCard(item.name, item.link, cardTemplateSelector)
+      const cardElement = createCard(item, cardTemplateSelector)
       cardsList.addItem(cardElement);
     }
   },
@@ -87,8 +91,13 @@ const changeProfileContent = (formInputs) => {
  * 
  * @param {SubmitEvent} event 
  */
-const addNewCard = () => {
-  cardsList.addItemToTopOfList(createCard(popupAddElementCardNewCardName.value, popupAddElementCardNewCardLink.value, cardTemplateSelector));
+const addNewCard = (
+  newCard
+) => {
+  cardsList.addItemToTopOfList(createCard({
+    name: newCard[`popup__input_type_card-name`],
+    link: newCard[`popup__input_type_image-link`]
+  }, cardTemplateSelector));
 }
 
 popupChangeProfileOpenBtn.addEventListener("click", () => {

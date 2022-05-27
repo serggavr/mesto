@@ -9,6 +9,7 @@ module.exports = {
   entry: {
     main: './src/scripts/index.js' // указали первое место, куда заглянет webpack, — файл index.js в папке src
   },
+  devtool: "source-map",
   output: {
     path: path.resolve(__dirname, 'dist'), // указали в какой файл будет собираться весь js  c помощью path
     filename: 'main.js', // и дали ему имя файлу main.js
@@ -32,11 +33,6 @@ module.exports = {
         use: 'babel-loader',
         // исключает папку node_modules, файлы в ней обрабатывать не нужно
         exclude: '/node_modules/'
-      },
-      {
-        test: /\.js$/,
-        enforce: "pre",
-        use: ["source-map-loader"],
       },
       {
         // регулярное выражение, которое ищет все файлы с такими расширениями
