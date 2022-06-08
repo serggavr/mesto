@@ -14,6 +14,7 @@ import {
   cardTemplateSelector,
   cardsContainerSelector,
   profileDescriptionSelector,
+  profileAvatarSelector,
   popupOverviewSelector,
   changeProfilePopupSelector,
   popupChangeProfileForm,
@@ -37,7 +38,8 @@ popupAddElementCardFormValidation.enableValidation()
 
 const userInfo = new UserInfo({
   userNameSelector: profileNameSelector,
-  userDescriptionSelector: profileDescriptionSelector
+  userDescriptionSelector: profileDescriptionSelector,
+  userAvatarSelector: profileAvatarSelector //////
 })
 
 const CardPopup = new PopupWithImage(popupOverviewSelector)
@@ -120,5 +122,27 @@ popupAddElementCardOpenBtn.addEventListener("click", () => {
   popup.open()
 });
 
+///////////Замена аватара
+// const profileAvatar = document.querySelector('.profile__avatar')
+const profileAvatarChangeBtn = document.querySelector('.profile__avatar_change-button')
+const updateAvatarPopupSelector = ".popup_type_update-avatar"
+const popupUpdateAvatarForm = document.querySelector(".popup__form[name=update-avatar]");
+
+const popupUpdateAvatarFormValidation = new FormValidator(validatorSelectors, popupUpdateAvatarForm)
+popupUpdateAvatarFormValidation.enableValidation()
+
+const updateAvatar = (formInput) => {
+  userInfo.setUserInfo({
+    newUserAvatarImageSrc: formInput['popup__input_type_avatar-link']
+  })
+}
+
+profileAvatarChangeBtn.addEventListener('click', () => {
+  const popup = new PopupWithForm({
+    submitForm: updateAvatar
+  }, updateAvatarPopupSelector)
+  popup.open()
+})
+//////////Замена аватара //// end
 
 cardsList.renderItems()

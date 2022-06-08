@@ -20,6 +20,8 @@
 /* profile  */
 @import url("../blocks/profile/profile.css");
 @import url("../blocks/profile/__avatar/profile__avatar.css");
+@import url("../blocks/profile/__avatar-wrapper/profile__avatar-wrapper.css");
+@import url("../blocks/profile/__avatar_change-button/profile__avatar_change-button.css");
 @import url("../blocks/profile/__title-block/profile__title-block.css");
 @import url("../blocks/profile/__title/profile__title.css");
 @import url("../blocks/profile/__subtitle/profile__subtitle.css");

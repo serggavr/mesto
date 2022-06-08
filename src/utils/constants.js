@@ -36,6 +36,7 @@ export const validatorSelectors = {
 
 export const profileNameSelector = ".profile__title";
 export const profileDescriptionSelector = ".profile__subtitle"
+export const profileAvatarSelector = ".profile__avatar"
 export const cardTemplateSelector = "#cardTemplate";
 export const cardsContainerSelector = ".elements__list"
 export const popupOverviewSelector = ".popup_type_element-overview";
