@@ -6,6 +6,7 @@ import PopupWithImage from './PopupWithImage.js';
 import FormValidator from './FormValidator.js'
 import PopupWithForm from './PopupWithForm.js';
 import UserInfo from './UserInfo.js';
+import PopupConfirmation from './PopupConfirmation.js';
 
 import {
   initialCards,
@@ -44,10 +45,25 @@ const userInfo = new UserInfo({
 
 const CardPopup = new PopupWithImage(popupOverviewSelector)
 
-const handleCardClick = (cardPhoto, cardName, cardLink) => {
+const handlerCardClick = (cardPhoto, cardName, cardLink) => {
   cardPhoto.addEventListener("click", (e) => {
     CardPopup.open(cardName, cardLink)
   })
+}
+
+////////////////
+const confirmationPopupSelector = ".popup_type_confirm"
+
+const handlerCardDeleteBtnClick = (card) => {
+  new PopupConfirmation({
+      confirmedFunction: deleteCard
+    },
+    confirmationPopupSelector
+  ).open(card)
+}
+
+function deleteCard(card) {
+  card.deleteCard()
 }
 
 function createCard({
@@ -55,7 +71,8 @@ function createCard({
   link
 }, templateSelector) {
   const newCard = new Card(name, link, templateSelector, {
-    handleCardClick: handleCardClick
+    handlerCardClick: handlerCardClick,
+    handlerCardDeleteBtnClick: handlerCardDeleteBtnClick
   }).createCard()
   return newCard
 }
