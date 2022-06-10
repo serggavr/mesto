@@ -9,7 +9,6 @@ import UserInfo from './UserInfo.js';
 import PopupConfirmation from './PopupConfirmation.js';
 
 import {
-  initialCards,
   validatorSelectors,
   profileNameSelector,
   cardTemplateSelector,
@@ -29,6 +28,32 @@ import {
   popupAddElementCardNewCardLink
 } from "../utils/constants.js"
 
+
+////////////api///
+import Api from './Api.js';
+
+const groupId = "cohort-43"
+const token = "56cfd0a1-6a89-41cf-9f3b-6d0765499e7a"
+const baseUrl = `https://nomoreparties.co/v1/${groupId}`
+
+const api = new Api({
+  baseUrl,
+  token,
+  groupId
+})
+
+api.getUser().then(res => {
+  userInfo.setUserInfo(res)
+}).catch(err => console.log(err))
+
+
+api.getCards().then(res => {
+  cardsList.renderItems(res)
+}).catch(err => console.log(err))
+
+// const initialCards = api.getCards()
+////////////api-end/////
+
 //enable validation popupChangeProfileForm
 const popupChangeProfileFormValidation = new FormValidator(validatorSelectors, popupChangeProfileForm)
 popupChangeProfileFormValidation.enableValidation()
@@ -42,6 +67,16 @@ const userInfo = new UserInfo({
   userDescriptionSelector: profileDescriptionSelector,
   userAvatarSelector: profileAvatarSelector //////
 })
+
+const cardsList = new Section({
+    items: [],
+    renderer: (item) => {
+      const cardElement = createCard(item, cardTemplateSelector)
+      cardsList.addItem(cardElement);
+    }
+  },
+  cardsContainerSelector)
+
 
 const CardPopup = new PopupWithImage(popupOverviewSelector)
 
@@ -77,14 +112,14 @@ function createCard({
   return newCard
 }
 
-const cardsList = new Section({
-    items: initialCards,
-    renderer: (item) => {
-      const cardElement = createCard(item, cardTemplateSelector)
-      cardsList.addItem(cardElement);
-    }
-  },
-  cardsContainerSelector)
+// const cardsList = new Section({
+//     items: initialCards,
+//     renderer: (item) => {
+//       const cardElement = createCard(item, cardTemplateSelector)
+//       cardsList.addItem(cardElement);
+//     }
+//   },
+//   cardsContainerSelector)
 
 function fillOnLoadProfilePopup() {
   const {
@@ -101,8 +136,8 @@ function fillOnLoadProfilePopup() {
  */
 const changeProfileContent = (formInputs) => {
   userInfo.setUserInfo({
-    newUserName: formInputs.popup__input_type_username,
-    newUserDescription: formInputs.popup__input_type_description
+    name: formInputs.popup__input_type_username,
+    about: formInputs.popup__input_type_description
   })
 }
 
@@ -150,7 +185,7 @@ popupUpdateAvatarFormValidation.enableValidation()
 
 const updateAvatar = (formInput) => {
   userInfo.setUserInfo({
-    newUserAvatarImageSrc: formInput['popup__input_type_avatar-link']
+    avatar: formInput['popup__input_type_avatar-link']
   })
 }
 

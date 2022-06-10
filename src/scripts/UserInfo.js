@@ -2,11 +2,15 @@ export default class UserInfo {
   constructor({
     userNameSelector,
     userDescriptionSelector,
-    userAvatarSelector
+    userAvatarSelector,
+    userId,
+    cohort
   }) {
     this._userDescriptionContainer = document.querySelector(userDescriptionSelector);
     this._userNameContainer = document.querySelector(userNameSelector);
     this._userAvatar = document.querySelector(userAvatarSelector);
+    this._userId = userId
+    this._cohort = cohort
   }
 
   getUserInfo() {
@@ -17,19 +21,23 @@ export default class UserInfo {
   }
 
   setUserInfo({
-    newUserName,
-    newUserDescription,
-    newUserAvatarImageSrc
+    name,
+    about,
+    avatar,
+    _id,
+    cohort
   }) {
-    if (newUserName) {
-      this._userNameContainer.textContent = newUserName;
+    if (name) {
+      this._userNameContainer.textContent = name;
     }
-    if (newUserDescription) {
-      this._userDescriptionContainer.textContent = newUserDescription;
+    if (about) {
+      this._userDescriptionContainer.textContent = about;
     }
-    if (newUserAvatarImageSrc) {
-      this._userAvatar.src = newUserAvatarImageSrc
+    if (avatar) {
+      this._userAvatar.src = avatar
       this._userAvatar.alt = this._userNameContainer.textContent
     }
   }
+
+
 }
