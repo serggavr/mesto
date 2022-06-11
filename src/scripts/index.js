@@ -135,9 +135,14 @@ function fillOnLoadProfilePopup() {
  * @param {SubmitEvent} event 
  */
 const changeProfileContent = (formInputs) => {
-  userInfo.setUserInfo({
-    name: formInputs.popup__input_type_username,
-    about: formInputs.popup__input_type_description
+  api.setUser({
+    newName: formInputs.popup__input_type_username,
+    newAbout: formInputs.popup__input_type_description
+  }).then(data => {
+    userInfo.setUserInfo({
+      name: data.name,
+      about: data.about
+    })
   })
 }
 

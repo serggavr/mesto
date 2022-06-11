@@ -67,4 +67,30 @@ export default class Api {
       console.log(err)
     })
   }
+
+  setUser({
+    newName,
+    newAbout
+  }) {
+    return fetch(`${this.baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: {
+        ...this.headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: newName,
+        about: newAbout
+      })
+    }).then(res => {
+      if (res.ok) {
+        return res.json()
+      }
+    }).then(data => {
+      // console.log(data)
+      return data
+    }).catch(err => {
+      console.log(err)
+    })
+  }
 }
