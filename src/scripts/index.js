@@ -34,7 +34,7 @@ import Api from './Api.js';
 
 const groupId = "cohort-43"
 const token = "56cfd0a1-6a89-41cf-9f3b-6d0765499e7a"
-const baseUrl = `https://nomoreparties.co/v1/${groupId}`
+const baseUrl = `https://mesto.nomoreparties.co/v1/${groupId}`
 
 const api = new Api({
   baseUrl,
@@ -103,9 +103,16 @@ function deleteCard(card) {
 
 function createCard({
   name,
-  link
+  link,
+  likes,
+  _id
 }, templateSelector) {
-  const newCard = new Card(name, link, templateSelector, {
+  const newCard = new Card({
+    name: name,
+    link: link,
+    likes: likes,
+    _id: _id
+  }, templateSelector, {
     handlerCardClick: handlerCardClick,
     handlerCardDeleteBtnClick: handlerCardDeleteBtnClick
   }).createCard()
@@ -153,10 +160,22 @@ const changeProfileContent = (formInputs) => {
 const addNewCard = (
   newCard
 ) => {
-  cardsList.addItemToTopOfList(createCard({
-    name: newCard[`popup__input_type_card-name`],
-    link: newCard[`popup__input_type_image-link`]
-  }, cardTemplateSelector));
+  api.setCard({
+    cardName: newCard[`popup__input_type_card-name`],
+    cardLink: newCard[`popup__input_type_image-link`]
+  }).then(data => {
+    // console.log(data)
+    cardsList.addItemToTopOfList(createCard({
+      name: data.name,
+      link: data.link,
+      likes: [],
+      _id: data._id
+    }, cardTemplateSelector))
+  })
+  // cardsList.addItemToTopOfList(createCard({
+  //   name: newCard[`popup__input_type_card-name`],
+  //   link: newCard[`popup__input_type_image-link`]
+  // }, cardTemplateSelector));
 }
 
 popupChangeProfileOpenBtn.addEventListener("click", () => {

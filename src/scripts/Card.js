@@ -1,5 +1,10 @@
 export default class Card {
-  constructor(name, link, templateSelector, {
+  constructor({
+    name,
+    link,
+    likes,
+    _id
+  }, templateSelector, {
     handlerCardClick,
     handlerCardDeleteBtnClick
   }) {

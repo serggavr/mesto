@@ -93,4 +93,32 @@ export default class Api {
       console.log(err)
     })
   }
+
+  setCard({
+    cardName,
+    cardLink
+  }) {
+    return fetch(`${this.baseUrl}/cards`, {
+      method: 'POST',
+      headers: {
+        ...this.headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: cardName,
+        link: cardLink
+      })
+    }).then(res => {
+      if (res.ok) {
+        // console.log(res)
+        return res.json()
+      }
+    }).then(data => {
+      // console.log(data)
+      return data
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
 }
