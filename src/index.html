@@ -20,21 +20,21 @@
       </header>
       <main class="content">
         <section class="profile section">
-          <img
-            src="<%=require('./images/profile/image/avatar.jpg')%>"
-            alt="Аватар пользователя"
-            class="profile__avatar"
-          />
+          <div class="profile__avatar-wrapper">
+            <!-- src="<%=require('./images/profile/image/avatar.jpg')%>" -->
+            <img src="" alt="Аватар пользователя" class="profile__avatar" />
+            <button class="profile__avatar_change-button"></button>
+          </div>
           <div class="profile__info">
             <div class="profile__title-block">
-              <h1 class="profile__title">Жак-Ив Кусто</h1>
+              <h1 class="profile__title"></h1>
               <button
                 class="profile__change-button"
                 type="button"
                 aria-label="Редактировать профиль"
               ></button>
             </div>
-            <p class="profile__subtitle">Исследователь океана</p>
+            <p class="profile__subtitle"></p>
           </div>
           <button
             class="profile__add-button"
@@ -125,6 +125,50 @@
       </div>
     </div>
 
+    <div class="popup popup_type_update-avatar">
+      <div class="popup__container">
+        <button
+          class="popup__close-button"
+          type="button"
+          aria-label="Закрыть"
+        ></button>
+        <form action="#" class="popup__form" name="update-avatar" novalidate>
+          <h2 class="popup__title">Обновить аватар</h2>
+          <input
+            data-input="avatar-link-input"
+            type="url"
+            class="popup__input popup__input_type_avatar-link"
+            name="popup__input_type_avatar-link"
+            required
+            placeholder="Ссылка на новый аватар"
+          />
+          <span class="popup__error" data-input="avatar-link-input-error">
+          </span>
+          <input type="submit" class="popup__button" value="Сохранить" />
+        </form>
+      </div>
+    </div>
+
+    <div class="popup popup_type_confirm">
+      <div class="popup__container">
+        <button
+          class="popup__close-button"
+          type="button"
+          aria-label="Закрыть"
+        ></button>
+        <form action="#" class="popup__form" name="update-avatar" novalidate>
+          <h2 class="popup__title popup__title_placed_submit-form">
+            Вы уверены?
+          </h2>
+          <input
+            type="submit"
+            class="popup__button popup__button_placed_submit-form"
+            value="Да"
+          />
+        </form>
+      </div>
+    </div>
+
     <div class="popup popup_type_element-overview">
       <div class="popup__container popup__container_placed_element-overview">
         <button
@@ -145,11 +189,14 @@
         <button class="element__delete-btn"></button>
         <div class="element__title-block">
           <h2 class="element__title"></h2>
-          <button
-            class="element__like"
-            type="button"
-            aria-label="Нравится"
-          ></button>
+          <div class="element__likes-wrapper">
+            <button
+              class="element__like"
+              type="button"
+              aria-label="Нравится"
+            ></button>
+            <span class="element__likes-counter"></span>
+          </div>
         </div>
       </li>
     </template>
