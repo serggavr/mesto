@@ -159,11 +159,12 @@ const changeProfileContent = (formInputs, submitButton) => {
     newName: formInputs.popup__input_type_username,
     newAbout: formInputs.popup__input_type_description
   }).then(data => {
+    submitButton.value = "Сохранить"
     userInfo.setUserInfo({
       name: data.name,
       about: data.about
     }).catch(err => console.log(err))
-    submitButton.value = "Сохранить"
+
   })
 }
 
@@ -213,8 +214,10 @@ popupAddElementCardOpenBtn.addEventListener("click", () => {
 });
 
 profileAvatarChangeBtn.addEventListener('click', () => {
+
   const popup = new PopupWithForm({
     submitForm: updateAvatar
   }, updateAvatarPopupSelector)
+  popupUpdateAvatarFormValidation.clearFormInputsErrors()
   popup.open()
 })
