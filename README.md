@@ -1,6 +1,6 @@
 > **Яндекс Практикум**
 
-## Проектная работа №8
+## Проектная работа №9
 
 ---
 
@@ -16,10 +16,14 @@
 
 [Ссылка на макет_4 в Figma](https://www.figma.com/file/kRVLKwYG3d1HGLvh7JFWRT/JavaScript.-Sprint-6?node-id=0%3A1)
 
+[Ссылка на макет_5 в Figma](https://www.figma.com/file/PSdQFRHoxXJFs2FH8IXViF/JavaScript-9-sprint?node-id=0%3A1)
+
 Страница сверстана по макету из Figma, по BEM, адаптивно, максимальная ширина экрана 1280px.
+Данные подгружаются с сервера и обновляются на сервере после внесения изменений на странице
 
 Используемые технологии:
 
 - html
 - css
 - js
+- webpack
