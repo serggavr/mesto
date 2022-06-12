@@ -6,17 +6,20 @@ export default class UserInfo {
     userId,
     cohort
   }) {
+    this.userId = userId
     this._userDescriptionContainer = document.querySelector(userDescriptionSelector);
     this._userNameContainer = document.querySelector(userNameSelector);
     this._userAvatar = document.querySelector(userAvatarSelector);
-    this._userId = userId
     this._cohort = cohort
   }
 
   getUserInfo() {
     return {
       name: this._userNameContainer.textContent,
-      description: this._userDescriptionContainer.textContent
+      about: this._userDescriptionContainer.textContent,
+      avatar: this._userAvatar.src,
+      _id: this.userId,
+      cohort: this._cohort
     }
   }
 
@@ -28,6 +31,7 @@ export default class UserInfo {
     cohort
   }) {
     if (name) {
+      this._name = name
       this._userNameContainer.textContent = name;
     }
     if (about) {
@@ -37,7 +41,11 @@ export default class UserInfo {
       this._userAvatar.src = avatar
       this._userAvatar.alt = this._userNameContainer.textContent
     }
+    if (_id) {
+      this.userId = _id
+    }
+    if (cohort) {
+      this._cohort = cohort
+    }
   }
-
-
 }

@@ -7,8 +7,12 @@ import FormValidator from './FormValidator.js'
 import PopupWithForm from './PopupWithForm.js';
 import UserInfo from './UserInfo.js';
 import PopupConfirmation from './PopupConfirmation.js';
+import Api from './Api.js';
 
 import {
+  groupId,
+  token,
+  baseUrl,
   validatorSelectors,
   profileNameSelector,
   cardTemplateSelector,
@@ -24,17 +28,11 @@ import {
   addElementCardPopupSelector,
   popupAddElementCardForm,
   popupAddElementCardOpenBtn,
-  popupAddElementCardNewCardName,
-  popupAddElementCardNewCardLink
+  confirmationPopupSelector,
+  profileAvatarChangeBtn,
+  updateAvatarPopupSelector,
+  popupUpdateAvatarForm,
 } from "../utils/constants.js"
-
-
-////////////api///
-import Api from './Api.js';
-
-const groupId = "cohort-43"
-const token = "56cfd0a1-6a89-41cf-9f3b-6d0765499e7a"
-const baseUrl = `https://mesto.nomoreparties.co/v1/${groupId}`
 
 const api = new Api({
   baseUrl,
@@ -42,17 +40,18 @@ const api = new Api({
   groupId
 })
 
-api.getUser().then(res => {
+const getUser = () => api.getUser().then(res => {
   userInfo.setUserInfo(res)
+  return res
 }).catch(err => console.log(err))
 
-
-api.getCards().then(res => {
+const getCard = () => api.getCards().then(res => {
   cardsList.renderItems(res)
 }).catch(err => console.log(err))
 
-// const initialCards = api.getCards()
-////////////api-end/////
+Promise.all([getUser()]).then((res) => {
+  getCard()
+}).catch(err => console.log(err))
 
 //enable validation popupChangeProfileForm
 const popupChangeProfileFormValidation = new FormValidator(validatorSelectors, popupChangeProfileForm)
@@ -62,10 +61,14 @@ popupChangeProfileFormValidation.enableValidation()
 const popupAddElementCardFormValidation = new FormValidator(validatorSelectors, popupAddElementCardForm)
 popupAddElementCardFormValidation.enableValidation()
 
+//enable validation popupUpdateAvatarForm
+const popupUpdateAvatarFormValidation = new FormValidator(validatorSelectors, popupUpdateAvatarForm)
+popupUpdateAvatarFormValidation.enableValidation()
+
 const userInfo = new UserInfo({
   userNameSelector: profileNameSelector,
   userDescriptionSelector: profileDescriptionSelector,
-  userAvatarSelector: profileAvatarSelector //////
+  userAvatarSelector: profileAvatarSelector
 })
 
 const cardsList = new Section({
@@ -77,7 +80,6 @@ const cardsList = new Section({
   },
   cardsContainerSelector)
 
-
 const CardPopup = new PopupWithImage(popupOverviewSelector)
 
 const handlerCardClick = (cardPhoto, cardName, cardLink) => {
@@ -85,9 +87,6 @@ const handlerCardClick = (cardPhoto, cardName, cardLink) => {
     CardPopup.open(cardName, cardLink)
   })
 }
-
-////////////////
-const confirmationPopupSelector = ".popup_type_confirm"
 
 const handlerCardDeleteBtnClick = (card) => {
   new PopupConfirmation({
@@ -97,51 +96,65 @@ const handlerCardDeleteBtnClick = (card) => {
   ).open(card)
 }
 
-function deleteCard(card) {
+function deleteCard(card, submitButton) {
+  submitButton.value = "Удаление..."
   card.deleteCard()
+  api.deleteCard(card.id).then((res) => {
+    submitButton.value = "Да"
+  }).catch(err => console.log(err))
+}
+
+const handlerCardLikeBtnClick = (card) => {
+  if (!userLikesThisCard(userInfo.userId, card.likes)) {
+    api.likeCard(card.id)
+  } else {
+    api.dislikeCard(card.id)
+  }
+}
+
+function userLikesThisCard(userId, likes) {
+  let isLiked
+  likes.forEach((liker) => {
+    if (userId === liker._id) {
+      isLiked = true
+    }
+  })
+  return isLiked
 }
 
 function createCard({
   name,
   link,
   likes,
-  _id
+  _id,
+  owner
 }, templateSelector) {
+  const isOwner = owner._id === userInfo.userId
   const newCard = new Card({
     name: name,
     link: link,
     likes: likes,
-    _id: _id
+    _id: _id,
+    owner: owner
   }, templateSelector, {
     handlerCardClick: handlerCardClick,
-    handlerCardDeleteBtnClick: handlerCardDeleteBtnClick
-  }).createCard()
+    handlerCardDeleteBtnClick: handlerCardDeleteBtnClick,
+    handlerCardLikeBtnClick: handlerCardLikeBtnClick
+  }).createCard(isOwner, userLikesThisCard(userInfo.userId, likes))
   return newCard
 }
-
-// const cardsList = new Section({
-//     items: initialCards,
-//     renderer: (item) => {
-//       const cardElement = createCard(item, cardTemplateSelector)
-//       cardsList.addItem(cardElement);
-//     }
-//   },
-//   cardsContainerSelector)
 
 function fillOnLoadProfilePopup() {
   const {
     name,
-    description
+    about
   } = userInfo.getUserInfo()
   popupChangeProfileNewName.value = name
-  popupChangeProfileNewDescription.value = description
+  popupChangeProfileNewDescription.value = about
 }
 
-/** Add value from popup__change_profile to the profile
- * 
- * @param {SubmitEvent} event 
- */
-const changeProfileContent = (formInputs) => {
+const changeProfileContent = (formInputs, submitButton) => {
+  submitButton.value = "Сохранение..."
   api.setUser({
     newName: formInputs.popup__input_type_username,
     newAbout: formInputs.popup__input_type_description
@@ -149,33 +162,36 @@ const changeProfileContent = (formInputs) => {
     userInfo.setUserInfo({
       name: data.name,
       about: data.about
-    })
+    }).catch(err => console.log(err))
+    submitButton.value = "Сохранить"
   })
 }
 
-/** Add new card to element__list
- * 
- * @param {SubmitEvent} event 
- */
-const addNewCard = (
-  newCard
-) => {
+const addNewCard = (newCard, submitButton) => {
+  submitButton.value = "Сохранение..."
   api.setCard({
     cardName: newCard[`popup__input_type_card-name`],
     cardLink: newCard[`popup__input_type_image-link`]
   }).then(data => {
-    // console.log(data)
     cardsList.addItemToTopOfList(createCard({
       name: data.name,
       link: data.link,
       likes: [],
-      _id: data._id
+      _id: data._id,
+      owner: userInfo.getUserInfo()
     }, cardTemplateSelector))
+    submitButton.value = "Создать"
+  }).catch(err => console.log(err))
+}
+
+const updateAvatar = (formInput, submitButton) => {
+  submitButton.value = "Сохранение..."
+  userInfo.setUserInfo({
+    avatar: formInput['popup__input_type_avatar-link']
   })
-  // cardsList.addItemToTopOfList(createCard({
-  //   name: newCard[`popup__input_type_card-name`],
-  //   link: newCard[`popup__input_type_image-link`]
-  // }, cardTemplateSelector));
+  api.setUserAvatar(formInput['popup__input_type_avatar-link']).then((res) => {
+    submitButton.value = "Сохранить"
+  }).catch(err => console.log(err))
 }
 
 popupChangeProfileOpenBtn.addEventListener("click", () => {
@@ -185,7 +201,6 @@ popupChangeProfileOpenBtn.addEventListener("click", () => {
   const popup = new PopupWithForm({
     submitForm: changeProfileContent
   }, changeProfilePopupSelector)
-
   popup.open()
 });
 
@@ -193,25 +208,9 @@ popupAddElementCardOpenBtn.addEventListener("click", () => {
   const popup = new PopupWithForm({
     submitForm: addNewCard
   }, addElementCardPopupSelector)
-
   popupAddElementCardFormValidation.clearFormInputsErrors()
   popup.open()
 });
-
-///////////Замена аватара
-// const profileAvatar = document.querySelector('.profile__avatar')
-const profileAvatarChangeBtn = document.querySelector('.profile__avatar_change-button')
-const updateAvatarPopupSelector = ".popup_type_update-avatar"
-const popupUpdateAvatarForm = document.querySelector(".popup__form[name=update-avatar]");
-
-const popupUpdateAvatarFormValidation = new FormValidator(validatorSelectors, popupUpdateAvatarForm)
-popupUpdateAvatarFormValidation.enableValidation()
-
-const updateAvatar = (formInput) => {
-  userInfo.setUserInfo({
-    avatar: formInput['popup__input_type_avatar-link']
-  })
-}
 
 profileAvatarChangeBtn.addEventListener('click', () => {
   const popup = new PopupWithForm({
@@ -219,6 +218,3 @@ profileAvatarChangeBtn.addEventListener('click', () => {
   }, updateAvatarPopupSelector)
   popup.open()
 })
-//////////Замена аватара //// end
-
-cardsList.renderItems()

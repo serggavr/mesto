@@ -9,11 +9,12 @@ export default class PopupConfirmation extends Popup {
     super(popupSelector)
     this._confirmedFunction = confirmedFunction
     this._popupForm = this._popup.querySelector('.popup__form');
+    this._popupSubmitButton = this._popup.querySelector('.popup__button');
   }
 
   _handleSubmitForm(event) {
     event.preventDefault();
-    this._confirmedFunction(this._card)
+    this._confirmedFunction(this._card, this._popupSubmitButton)
     this.close()
   }
 

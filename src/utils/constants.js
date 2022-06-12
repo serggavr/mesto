@@ -1,28 +1,7 @@
-// export const initialCards = [{
-//     name: "Архыз",
-//     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-//   },
-//   {
-//     name: "Челябинская область",
-//     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-//   },
-//   {
-//     name: "Иваново",
-//     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-//   },
-//   {
-//     name: "Камчатка",
-//     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-//   },
-//   {
-//     name: "Холмогорский район",
-//     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-//   },
-//   {
-//     name: "Байкал",
-//     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-//   },
-// ];
+// api- mesto.nomoreparties.co
+export const groupId = "cohort-43"
+export const token = "56cfd0a1-6a89-41cf-9f3b-6d0765499e7a"
+export const baseUrl = `https://mesto.nomoreparties.co/v1/`
 
 export const validatorSelectors = {
   formSelector: '.popup__form',
@@ -54,3 +33,11 @@ export const popupAddElementCardForm = document.querySelector(".popup__form[name
 export const popupAddElementCardOpenBtn = document.querySelector(".profile__add-button");
 export const popupAddElementCardNewCardName = popupAddElementCardForm.querySelector(".popup__input_type_card-name");
 export const popupAddElementCardNewCardLink = popupAddElementCardForm.querySelector(".popup__input_type_image-link");
+
+// popup_type_confirm
+export const confirmationPopupSelector = ".popup_type_confirm"
+export const profileAvatarChangeBtn = document.querySelector('.profile__avatar_change-button')
+
+// popup_type_update-avatar
+export const updateAvatarPopupSelector = ".popup_type_update-avatar"
+export const popupUpdateAvatarForm = document.querySelector(".popup__form[name=update-avatar]");

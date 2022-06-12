@@ -4,33 +4,20 @@ export default class Api {
     token,
     groupId,
   }) {
-    this.baseUrl = baseUrl
-    this.token = token
-    this.groupId = groupId
-    this.headers = {
-      authorization: this.token
+    this._baseUrl = baseUrl
+    this._token = token
+    this._groupId = groupId
+    this._headers = {
+      authorization: this._token
     }
   }
 
-  // getInitialCards() {
-  //   return fetch(`${this.baseUrl}/cards`, {
-  //     ...headers,
-  //     method: 'GET'
-  //   })
-  // }
 
   getUser() {
-    // console.log({
-    //   method: 'GET',
-    //   headers: {
-    //     ...this.headers
-    //   }
-    // }, `${this.baseUrl}/users/me`)
-
-    return fetch(`${this.baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}/${this._groupId}/users/me`, {
         method: 'GET',
         headers: {
-          ...this.headers
+          ...this._headers
         }
       })
       .then(res => {
@@ -39,7 +26,6 @@ export default class Api {
         }
       })
       .then((data) => {
-        // console.log(result)
         return data
       })
       .catch((err) => {
@@ -47,15 +33,11 @@ export default class Api {
       })
   }
 
-
-  /**
-   * @returns {  [ { likes, _id, name, link, {owner}, createdA } ]  }
-   */
   getCards() {
-    return fetch(`${this.baseUrl}/cards`, {
+    return fetch(`${this._baseUrl}/${this._groupId}/cards`, {
       method: 'GET',
       headers: {
-        ...this.headers
+        ...this._headers
       }
     }).then(res => {
       if (res.ok) {
@@ -72,10 +54,10 @@ export default class Api {
     newName,
     newAbout
   }) {
-    return fetch(`${this.baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}/${this._groupId}/users/me`, {
       method: 'PATCH',
       headers: {
-        ...this.headers,
+        ...this._headers,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -87,7 +69,6 @@ export default class Api {
         return res.json()
       }
     }).then(data => {
-      // console.log(data)
       return data
     }).catch(err => {
       console.log(err)
@@ -98,10 +79,10 @@ export default class Api {
     cardName,
     cardLink
   }) {
-    return fetch(`${this.baseUrl}/cards`, {
+    return fetch(`${this._baseUrl}/${this._groupId}/cards`, {
       method: 'POST',
       headers: {
-        ...this.headers,
+        ...this._headers,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -110,11 +91,90 @@ export default class Api {
       })
     }).then(res => {
       if (res.ok) {
-        // console.log(res)
         return res.json()
       }
     }).then(data => {
-      // console.log(data)
+      console.log(data)
+      return data
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
+  deleteCard(cardId) {
+    return fetch(`${this._baseUrl}/${this._groupId}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: {
+        ...this._headers,
+        'Content-Type': 'application/json'
+      },
+    }).then(res => {
+      if (res.ok) {
+        return res.json()
+      }
+    }).then(data => {
+      console.log(data)
+      return data
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
+  likeCard(
+    cardId
+  ) {
+    return fetch(`${this._baseUrl}/${this._groupId}/cards/${cardId}/likes`, {
+      method: 'PUT',
+      headers: {
+        ...this._headers,
+        'Content-Type': 'application/json'
+      }
+    }).then(res => {
+      if (res.ok) {
+        return res.json()
+      }
+    }).then(data => {
+      return data
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
+  dislikeCard(
+    cardId
+  ) {
+    return fetch(`${this._baseUrl}/${this._groupId}/cards/${cardId}/likes`, {
+      method: 'DELETE',
+      headers: {
+        ...this._headers,
+        'Content-Type': 'application/json'
+      }
+    }).then(res => {
+      if (res.ok) {
+        return res.json()
+      }
+    }).then(data => {
+      return data
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
+  setUserAvatar(avatarSrc) {
+    return fetch(`${this._baseUrl}/${this._groupId}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+        ...this._headers,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        avatar: avatarSrc,
+      })
+    }).then(res => {
+      if (res.ok) {
+        return res.json()
+      }
+    }).then(data => {
       return data
     }).catch(err => {
       console.log(err)
