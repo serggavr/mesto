@@ -36,7 +36,7 @@ export const popupAddElementCardNewCardLink = popupAddElementCardForm.querySelec
 
 // popup_type_confirm
 export const confirmationPopupSelector = ".popup_type_confirm"
-export const profileAvatarChangeBtn = document.querySelector('.profile__avatar_change-button')
+export const profileAvatarChangeBtn = document.querySelector('.profile__avatar-change-button')
 
 // popup_type_update-avatar
 export const updateAvatarPopupSelector = ".popup_type_update-avatar"
