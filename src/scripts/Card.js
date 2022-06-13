@@ -26,7 +26,8 @@ export default class Card {
     return this._cardTemplate;
   }
 
-  createCard(isOwner, isLiked) {
+  createCard(userId) {
+    this.userId = userId
     this._card = this._getTemplate();
 
     this._elementPhoto = this._card.querySelector(".element__photo");
@@ -35,18 +36,15 @@ export default class Card {
     this._elementLikeBtn = this._card.querySelector(".element__like");
     this._elementLikesCounter = this._card.querySelector(".element__likes-counter");
 
-    if (!isOwner) {
+    if (!this._isOwner(userId)) {
       this._elementDeleteBtn.remove()
-    }
-    if (isLiked) {
-      this._elementLikeBtn.classList.add("element__like_active")
     }
 
     this._elementPhoto.src = this._link;
     this._elementPhoto.alt = this._name;
     this._elementTitle.textContent = this._name;
-    this._elementLikesCounter.textContent = this.likes.length
 
+    this.updateLikes(this.likes)
     this._setEventListeners();
 
     return this._card;
@@ -58,7 +56,6 @@ export default class Card {
     }
     this._elementLikeBtn.addEventListener("click", () => {
       this._handlerCardLikeBtnClick(this)
-      this._likeCard()
     });
     this._handleCardClick(this._elementPhoto, this._name, this._link)
   }
@@ -68,12 +65,25 @@ export default class Card {
     this._card = null;
   }
 
-  _likeCard() {
+  likeCard() {
     this._elementLikeBtn.classList.toggle("element__like_active");
-    if (this._elementLikeBtn.classList.contains("element__like_active")) {
-      this._elementLikesCounter.textContent = +this._elementLikesCounter.textContent + 1
+  }
+
+  updateLikes(likes) {
+    this.likes = likes
+    this._elementLikesCounter.textContent = this.likes.length;
+    if (this.isLiked()) {
+      this._elementLikeBtn.classList.add("element__like_active");
     } else {
-      this._elementLikesCounter.textContent = +this._elementLikesCounter.textContent - 1
+      this._elementLikeBtn.classList.remove("element__like_active");
     }
+  }
+
+  isLiked() {
+    return this.likes.some((like) => like._id === this.userId)
+  }
+
+  _isOwner() {
+    return this.owner._id === this.userId
   }
 }

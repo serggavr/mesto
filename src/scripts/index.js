@@ -88,29 +88,45 @@ const handlerCardClick = (cardPhoto, cardName, cardLink) => {
   })
 }
 
+const popupConfirmation = new PopupConfirmation({
+    confirmedFunction: deleteCard
+  },
+  confirmationPopupSelector
+)
+popupConfirmation.setEventListeners()
+
 const handlerCardDeleteBtnClick = (card) => {
-  new PopupConfirmation({
-      confirmedFunction: deleteCard
-    },
-    confirmationPopupSelector
-  ).open(card)
+  popupConfirmation.open(card)
 }
 
 function deleteCard(card, submitButton) {
-  submitButton.value = "Удаление..."
-  card.deleteCard()
+  // submitButton.value = "Удаление..."
   api.deleteCard(card.id).then((res) => {
-    submitButton.value = "Да"
-  }).catch(err => console.log(err))
+      card.deleteCard()
+      popupConfirmation.close()
+    })
+    .finally(res => this.setSubmitButtonTextContent("Да"))
+    .catch(err => console.log(err))
 }
 
 const handlerCardLikeBtnClick = (card) => {
-  if (!userLikesThisCard(userInfo.userId, card.likes)) {
+  if (!card.isLiked(userInfo.userId)) {
     api.likeCard(card.id)
+      .then((res) => {
+        card.likeCard()
+        card.updateLikes(res.likes)
+      })
+      .catch(err => console.log(err))
   } else {
     api.dislikeCard(card.id)
+      .then((res) => {
+        card.likeCard()
+        card.updateLikes(res.likes)
+      })
+      .catch(err => console.log(err))
   }
 }
+
 
 function userLikesThisCard(userId, likes) {
   let isLiked
@@ -129,7 +145,7 @@ function createCard({
   _id,
   owner
 }, templateSelector) {
-  const isOwner = owner._id === userInfo.userId
+  // const isOwner = owner._id === userInfo.userId
   const newCard = new Card({
     name: name,
     link: link,
@@ -140,7 +156,9 @@ function createCard({
     handlerCardClick: handlerCardClick,
     handlerCardDeleteBtnClick: handlerCardDeleteBtnClick,
     handlerCardLikeBtnClick: handlerCardLikeBtnClick
-  }).createCard(isOwner, userLikesThisCard(userInfo.userId, likes))
+  }).createCard(userInfo.userId)
+  // userLikesThisCard(userInfo.userId, likes)
+  // console.log(newCard)
   return newCard
 }
 
@@ -164,7 +182,6 @@ const changeProfileContent = (formInputs, submitButton) => {
       name: data.name,
       about: data.about
     }).catch(err => console.log(err))
-
   })
 }
 
@@ -195,29 +212,35 @@ const updateAvatar = (formInput, submitButton) => {
   }).catch(err => console.log(err))
 }
 
+const popupChangeProfile = new PopupWithForm({
+  submitForm: changeProfileContent
+}, changeProfilePopupSelector)
+popupChangeProfile.setEventListeners()
+
 popupChangeProfileOpenBtn.addEventListener("click", () => {
   fillOnLoadProfilePopup();
   popupChangeProfileFormValidation.clearFormInputsErrors()
-
-  const popup = new PopupWithForm({
-    submitForm: changeProfileContent
-  }, changeProfilePopupSelector)
-  popup.open()
+  popupChangeProfile.open()
 });
+
+const popupAddElementCard = new PopupWithForm({
+  submitForm: addNewCard
+}, addElementCardPopupSelector)
+popupAddElementCard.setEventListeners()
 
 popupAddElementCardOpenBtn.addEventListener("click", () => {
-  const popup = new PopupWithForm({
-    submitForm: addNewCard
-  }, addElementCardPopupSelector)
   popupAddElementCardFormValidation.clearFormInputsErrors()
-  popup.open()
+  popupAddElementCard.open()
 });
 
-profileAvatarChangeBtn.addEventListener('click', () => {
+const popupChangeProfileAvatar = new PopupWithForm({
+  submitForm: updateAvatar
+}, updateAvatarPopupSelector)
+popupChangeProfileAvatar.setEventListeners()
 
-  const popup = new PopupWithForm({
-    submitForm: updateAvatar
-  }, updateAvatarPopupSelector)
+console.log(popupChangeProfileAvatar)
+
+profileAvatarChangeBtn.addEventListener('click', () => {
   popupUpdateAvatarFormValidation.clearFormInputsErrors()
-  popup.open()
+  popupChangeProfileAvatar.open()
 })
