@@ -15,27 +15,14 @@ export default class PopupConfirmation extends Popup {
 
   _handleSubmitForm(event) {
     event.preventDefault();
-    this._confirmedFunction(this._card, this._popupSubmitButton)
-    // this.close()
-  }
-
-  setSubmitButtonTextContent(value) {
-    this._popupSubmitButton.value = value
+    this._confirmedFunction(this._card)
   }
 
   setEventListeners() {
     super.setEventListeners()
-
     this._popupForm.addEventListener("submit", (e) => {
-      this.setSubmitButtonTextContent("Удаление...")
       this._handleSubmitFormListener(e)
-
     })
-  }
-
-  _removeEventListeners() {
-    super._removeEventListeners()
-    // this._popupForm.removeEventListener("submit", this._handleSubmitFormListener)
   }
 
   open(card) {
