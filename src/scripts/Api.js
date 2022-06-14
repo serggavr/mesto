@@ -8,23 +8,27 @@ export default class Api {
     this._token = token
     this._groupId = groupId
     this._headers = {
-      authorization: this._token
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json'
+      }
     }
   }
 
+  _getResponseData(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
 
   getUser() {
     return fetch(`${this._baseUrl}/${this._groupId}/users/me`, {
         method: 'GET',
-        headers: {
-          ...this._headers
-        }
+        ...this._headers
       })
       .then(res => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return this._getResponseData(res)
       })
       .then((data) => {
         return data
@@ -37,14 +41,9 @@ export default class Api {
   getCards() {
     return fetch(`${this._baseUrl}/${this._groupId}/cards`, {
       method: 'GET',
-      headers: {
-        ...this._headers
-      }
+      ...this._headers
     }).then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return this._getResponseData(res)
     }).then(data => {
       return data
     }).catch((err) => {
@@ -58,19 +57,13 @@ export default class Api {
   }) {
     return fetch(`${this._baseUrl}/${this._groupId}/users/me`, {
       method: 'PATCH',
-      headers: {
-        ...this._headers,
-        'Content-Type': 'application/json'
-      },
+      ...this._headers,
       body: JSON.stringify({
         name: newName,
         about: newAbout
       })
     }).then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return this._getResponseData(res)
     }).then(data => {
       return data
     }).catch(err => {
@@ -84,21 +77,14 @@ export default class Api {
   }) {
     return fetch(`${this._baseUrl}/${this._groupId}/cards`, {
       method: 'POST',
-      headers: {
-        ...this._headers,
-        'Content-Type': 'application/json'
-      },
+      ...this._headers,
       body: JSON.stringify({
         name: cardName,
         link: cardLink
       })
     }).then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return this._getResponseData(res)
     }).then(data => {
-      console.log(data)
       return data
     }).catch(err => {
       console.log(err)
@@ -108,15 +94,9 @@ export default class Api {
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/${this._groupId}/cards/${cardId}`, {
       method: 'DELETE',
-      headers: {
-        ...this._headers,
-        'Content-Type': 'application/json'
-      },
+      ...this._headers,
     }).then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return this._getResponseData(res)
     }).then(data => {
       console.log(data)
       return data
@@ -130,15 +110,9 @@ export default class Api {
   ) {
     return fetch(`${this._baseUrl}/${this._groupId}/cards/${cardId}/likes`, {
       method: 'PUT',
-      headers: {
-        ...this._headers,
-        'Content-Type': 'application/json'
-      }
+      ...this._headers
     }).then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return this._getResponseData(res)
     }).then(data => {
       return data
     }).catch(err => {
@@ -151,15 +125,9 @@ export default class Api {
   ) {
     return fetch(`${this._baseUrl}/${this._groupId}/cards/${cardId}/likes`, {
       method: 'DELETE',
-      headers: {
-        ...this._headers,
-        'Content-Type': 'application/json'
-      }
+      ...this._headers
     }).then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return this._getResponseData(res)
     }).then(data => {
       return data
     }).catch(err => {
@@ -170,18 +138,12 @@ export default class Api {
   setUserAvatar(avatarSrc) {
     return fetch(`${this._baseUrl}/${this._groupId}/users/me/avatar`, {
       method: 'PATCH',
-      headers: {
-        ...this._headers,
-        'Content-Type': 'application/json'
-      },
+      ...this._headers,
       body: JSON.stringify({
         avatar: avatarSrc,
       })
     }).then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return this._getResponseData(res)
     }).then(data => {
       return data
     }).catch(err => {
