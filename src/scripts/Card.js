@@ -65,10 +65,6 @@ export default class Card {
     this._card = null;
   }
 
-  likeCard() {
-    this._elementLikeBtn.classList.toggle("element__like_active");
-  }
-
   updateLikes(likes) {
     this.likes = likes
     this._elementLikesCounter.textContent = this.likes.length;

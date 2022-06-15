@@ -29,4 +29,8 @@ export default class PopupConfirmation extends Popup {
     super.open()
     this._card = card
   }
+
+  setSubmitButtonTextContent(value) {
+    this._popupSubmitButton.value = value
+  }
 }
