@@ -35,9 +35,11 @@ import {
 } from "../utils/constants.js"
 
 const api = new Api({
-  baseUrl,
-  token,
-  groupId
+  baseUrl: `${baseUrl}${groupId}`,
+  headers: {
+    authorization: token,
+    'Content-Type': 'application/json'
+  }
 })
 
 Promise.all([
@@ -125,17 +127,11 @@ const handlerCardDeleteBtnClick = (card) => {
 const handlerCardLikeBtnClick = (card) => {
   if (!card.isLiked(userInfo.userId)) {
     api.likeCard(card.id)
-      .then((res) => {
-        card.likeCard()
-        card.updateLikes(res.likes)
-      })
+      .then(res => card.updateLikes(res.likes))
       .catch(err => console.log(err))
   } else {
     api.dislikeCard(card.id)
-      .then((res) => {
-        card.likeCard()
-        card.updateLikes(res.likes)
-      })
+      .then(res => card.updateLikes(res.likes))
       .catch(err => console.log(err))
   }
 }
@@ -166,11 +162,13 @@ const changeProfileContent = (formInputs) => {
 
 const updateAvatar = (formInput) => {
   popupChangeProfileAvatar.setSubmitButtonTextContent("Сохранение...")
-  userInfo.setUserInfo({
-    avatar: formInput['popup__input_type_avatar-link']
-  })
   api.setUserAvatar(formInput['popup__input_type_avatar-link'])
-    .then(() => popupChangeProfileAvatar.close())
+    .then(() => {
+      userInfo.setUserInfo({
+        avatar: formInput['popup__input_type_avatar-link']
+      })
+      popupChangeProfileAvatar.close()
+    })
     .finally(() => popupChangeProfileAvatar.setSubmitButtonTextContent("Создать"))
     .catch(err => console.log(err))
 }

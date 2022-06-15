@@ -12,7 +12,7 @@ export default class Popup {
 
   close() {
     this._popup.classList.remove("popup_opened");
-    this._removeEventListeners()
+    document.removeEventListener('keyup', this._handleEscCloseListener);
   }
 
   _handleEscClose(event) {
@@ -26,13 +26,5 @@ export default class Popup {
   setEventListeners() {
     this._popupCloseButton.addEventListener("click", this.close.bind(this))
     this._popup.addEventListener('mouseup', (event) => this._handleClickOnOverlayClose(event));
-  }
-
-  _removeEventListeners() {
-    document.removeEventListener('keyup', this._handleEscCloseListener);
-  }
-
-  setSubmitButtonTextContent(value) {
-    this._popupSubmitButton.value = value
   }
 }
